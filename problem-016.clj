@@ -22,8 +22,9 @@
         n
         :else
         (let [base (ref n)]
-          (dotimes [i (dec exp)]
-            (dosync (ref-set base (* @base n))))
+          (dosync
+           (dotimes [i (dec exp)]
+             (ref-set base (* @base n))))
           @base)))
 
 
