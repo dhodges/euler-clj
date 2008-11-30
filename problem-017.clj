@@ -47,9 +47,8 @@
           (if (> n 0)
             (append "and")))
 
-        (cond (< n 20)
+        (if (< n 20)
               (append (str (wordmap n)))
-              :else
               (let [[q r] (qr n 10)]
                 (append (str (wordmap (* q 10)) (wordmap r))))))
 
@@ -64,5 +63,6 @@
                 (+ @lettercount (count (written-number i))))))
     (printf "result => %d\n" @lettercount)))
 
-; != 1366
+; 21124
+
 
