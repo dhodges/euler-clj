@@ -29,6 +29,7 @@
 
 (defn solution
   []
-  (reduce + (map #(- (int %) 48) 
-                 (seq (str (pow 2 1000))))))
+  (time 
+   (reduce + (map #(- (int %) 48) 
+                  (seq (str (pow 2 1000)))))))
 
