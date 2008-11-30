@@ -42,8 +42,10 @@
         (append (str (wordmap q) (wordmap 1000))))
 
       (let [[q n] (qr n 100)]
-        (if (> q 0)
-          (append (str (wordmap q) (wordmap 100) "and")))
+        (when (> q 0)
+          (append (str (wordmap q) (wordmap 100)))
+          (if (> n 0)
+            (append "and")))
 
         (cond (< n 20)
               (append (str (wordmap n)))
@@ -61,3 +63,6 @@
        (ref-set lettercount 
                 (+ @lettercount (count (written-number i))))))
     (printf "result => %d\n" @lettercount)))
+
+; != 1366
+
