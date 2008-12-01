@@ -54,6 +54,7 @@
                    (63  66   4  68  89  53  67  30  73  16  69  87  40  31)
                    ( 4  62  98  27  23   9  70  98  73  93  38  53  60   4  23)))
 
+
 (defn make-tree
   "returns the root of a tree built up from rows of numbers"
   [rows]
@@ -71,25 +72,29 @@
                                     (nth last-nodes n) 
                                     (nth last-nodes (inc n)))))))
           (recur (rest rows)))))))
+
         
+(defn take-last
+  [n coll]
+  (reverse (take n (reverse coll))))
+
+
 (defn find-max-total
   [rows]
   (loop [totals (first rows)
          rows   (rest rows)]
-    (println totals)
     (if (empty? rows)
       (reduce max totals)
       (let [row (first rows)
+            last-row (take-last (dec (count row)) totals)
             new-totals (ref '())]
         (dosync         
-         (doseq [n (range (count totals))]
+         (doseq [n (range (count last-row))]
            (ref-set new-totals 
                     (concat @new-totals
-                            [(+ (nth totals n) (nth row n)) 
-                             (+ (nth totals n) (nth row (inc n)))]))))
+                            [(+ (nth last-row n) (nth row n)) 
+                             (+ (nth last-row n) (nth row (inc n)))]))))
         (recur @new-totals (rest rows))))))
 
-    
-
-     
+         
 (find-max-total number-rows)
