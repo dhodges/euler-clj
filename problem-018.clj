@@ -38,10 +38,6 @@
 
 (defstruct node :val :left :right)
 
-(defn nth-last
-  [n coll]
-  (nth n (reverse coll)))
-
 (def number-rows '((75)
                    (95  64)
                    (17  47  82)
@@ -63,20 +59,37 @@
   [rows]
   (let [nodes (ref (map #(struct node % nil nil) (last rows)))]
     (loop [rows (rest (reverse rows))]
-      (if (= (count rows) 0)
-        (first @nodes)
-        (let [row  (first rows)
-              rows (rest rows)]
+      (if (empty? rows)
+        (last @nodes)
+        (let [row (first rows)
+              last-nodes (reverse (take (inc (count row)) (reverse @nodes)))]
           (dosync 
            (ref-set nodes 
-                    (conj @nodes 
-                            (for [n (range (count row))]
-                              (struct node (nth row n) 
-                                      (nth-last n @nodes) 
-                                      (nth-last (inc n) @nodes))))))
-          (recur rows))))))
+                    (concat @nodes 
+                          (for [n (range (count row))]
+                            (struct node (nth row n) 
+                                    (nth last-nodes n) 
+                                    (nth last-nodes (inc n)))))))
+          (recur (rest rows)))))))
         
-      
+(defn find-max-total
+  [rows]
+  (loop [totals (first rows)
+         rows   (rest rows)]
+    (println totals)
+    (if (empty? rows)
+      (reduce max totals)
+      (let [row (first rows)
+            new-totals (ref '())]
+        (dosync         
+         (doseq [n (range (count totals))]
+           (ref-set new-totals 
+                    (concat @new-totals
+                            [(+ (nth totals n) (nth row n)) 
+                             (+ (nth totals n) (nth row (inc n)))]))))
+        (recur @new-totals (rest rows))))))
 
+    
 
-  
+     
+(find-max-total number-rows)
