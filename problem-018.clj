@@ -79,6 +79,7 @@
   (reverse (take n (reverse coll))))
 
 
+
 (defn find-max-total
   [rows]
   (loop [totals (first rows)
@@ -98,3 +99,6 @@
 
          
 (find-max-total number-rows)
+
+; != 849
+
