@@ -62,7 +62,7 @@
   [n]
   (let [result (ref [])]
     (dosync
-     (dotimes [i n]
+     (doseq [i (range 12 n)]
        (if (abundant? i)
          (ref-set result (conj @result i))))
      @result)))
@@ -76,9 +76,10 @@
      (dosync
       (doseq [n (range 28123 1 -1)]
         (ref-set abundants (drop-while #(> % n) @abundants))
-        (let [found (ref false)]
+        (let [found (ref false)
+              num-abundants (count @abundants)]
           (loop [ndx 0]
-            (if (and (< ndx (count @abundants))
+            (if (and (< ndx num-abundants)
                      (not @found))
               (do
                 (if (abundant? (- n (nth @abundants ndx)))
