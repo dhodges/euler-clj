@@ -30,7 +30,6 @@
   [x y]
   (= (rem x y) 0))
 
-
 (defn proper-divisors
   "return the proper divisors of the given number"
   [n]
@@ -42,7 +41,7 @@
                            (if (factor? n x)
                              (concat [x (/ n x)] factors)
                              factors))))]
-    (sort (set (conj factors 1)))))
+    (sort (distinct (conj factors 1)))))
 
 
 (defn perfect?
@@ -53,19 +52,14 @@
   [n]
   (> n (apply + (proper-divisors n))))  
   
-
 (defn abundant?
   [n]
   (< n (apply + (proper-divisors n))))
 
+
 (defn abundant-numbers-less-than
   [n]
-  (let [result (ref [])]
-    (dosync
-     (doseq [i (range 12 n)]
-       (if (abundant? i)
-         (ref-set result (conj @result i))))
-     @result)))
+  (filter abundant? (range 12 n)))
 
 
 (defn solution
@@ -79,12 +73,11 @@
         (let [found (ref false)
               num-abundants (count @abundants)]
           (loop [ndx 0]
-            (if (and (< ndx num-abundants)
-                     (not @found))
-              (do
-                (if (abundant? (- n (nth @abundants ndx)))
-                  (ref-set found true))
-                (recur (inc ndx)))))
+            (if (< ndx num-abundants)
+              (if (abundant? (- n (nth @abundants ndx)))
+                (ref-set found true)
+                (if (not @found)
+                  (recur (inc ndx))))))
 
           (if (not @found)
             (ref-set results (conj @results n))))))
@@ -93,3 +86,4 @@
 
 
 ; != 4178875
+; != 4178876
