@@ -69,6 +69,6 @@
  (time
   (apply + (flatten (amicable-pairs-less-than 10000)))))
 
-(defn test
+(defn test-solution
   []
   (= (solution) 31626))

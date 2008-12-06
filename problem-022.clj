@@ -44,7 +44,7 @@
               (name-score (nth names n) (inc n))))))
 
 
-(defn test
+(defn test-solution
   []
   (= (solution) 871198282))
 

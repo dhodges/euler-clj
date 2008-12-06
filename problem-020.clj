@@ -27,6 +27,6 @@
           (map #(- (int %) 48)
                (str (fib 100))))))
 
-(defn test
+(defn test-solution
   []
   (= (solution) 648))
