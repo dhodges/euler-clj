@@ -2,8 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user (:import [java.math BigDecimal MathContext RoundingMode]
-                  [java.text NumberFormat]))
+(ns user)
 
 ;; http://projecteuler.net/index.php?section=problems&id=26
 ;;
@@ -74,4 +73,29 @@
            (println (str "1 / " @num " = "  (/ 1.0 @num)))
            (println (str "      " indent " -> " @cycle " <-"))))))
 
-; solution == 405
+(defn find-cycles
+  []
+  (time
+   (let [cycles (ref [])]
+     (dosync
+      (doseq [n (range 1 1000)]
+        (let [pat (find-recurring-cycle n)]
+          (when (> (count pat) 1)
+              (ref-set cycles (conj @cycles [n pat]))))))
+     (let [comp (proxy [java.util.Comparator] []
+                  (compare [o1 o2]
+                           (let [len1 (count (second o1))
+                                 len2 (count (second o2))]
+                           (cond (< len1 len2)
+                                 -1
+                                 (= len1 len2)
+                                 0
+                                 :else
+                                 1))))]
+     (doseq [c (take 10 (reverse (sort comp @cycles)))]
+       (println (format "%s" c)))))))
+
+; solution != 405
+; solution != 810
+
+(find-cycles)
