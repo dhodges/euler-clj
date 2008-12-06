@@ -40,37 +40,38 @@
 
 (defn find-recurring-cycle
   [n]
-  (let [pattern (ref "")
-        s (.substring (str (/ 1.0 n)) 2)]
+  (let [cycle (ref "")
+        s     (.substring (str (/ 1.0 n)) 2)]
     (dosync
      (doseq [ndx (range (dec (count s)))]
        (let [s (.substring s ndx)
-             c (str (nth s 0))
+             c (str (first s))
              cndx (.indexOf (.substring s 1) c)]
          (when (> cndx -1)
            (let [cndx (inc cndx)
                  astr (.substring s 0 cndx)
                  bstr (.substring s cndx)]
              (if (and (.startsWith bstr astr)
-                      (> (count astr) (count @pattern)))
-               (ref-set pattern astr)))))))
-    @pattern))
+                      (> (count astr) (count @cycle)))
+               (ref-set cycle astr)))))))
+    @cycle))
             
             
 (defn solution
   []
   (time
-   (let [num     (ref -1)
-         pattern (ref "")]
+   (let [num   (ref -1)
+         cycle (ref "")]
      (dosync
       (doseq [n (range 1 1000)]
         (let [pat (find-recurring-cycle n)]
-          (if (> (count pat) (count @pattern))
-            (do
+          (when (> (count pat) (count @cycle))
               (ref-set num n)
-              (ref-set pattern pat))))))
-     (println (str "1 / " @num " = "  (/ 1.0 @num)))
-     (println (str "pattern: " @pattern))
-     (println (str " length: " (count @pattern))))))
+              (ref-set cycle pat)))))
+     (let [spaces "                      "
+           ndx    (.indexOf (str (/ 1.0 @num)) @cycle)
+           indent (.substring spaces 0 ndx)]
+           (println (str "1 / " @num " = "  (/ 1.0 @num)))
+           (println (str "      " indent " -> " @cycle " <-"))))))
 
-          
+; solution == 405
