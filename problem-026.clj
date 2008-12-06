@@ -28,3 +28,49 @@
 ;;
 ;; Find the value of d < 1000 for which 1/d contains the longest recurring cycle 
 ;; in its decimal fraction part.
+
+
+; Notes:
+; apparently the length of the recurring cycle (if any)
+; will not be larger than the denominator
+; e.g: the size of the recurring cycle in 1/7 (142857) is 6
+; and 6 < 7
+
+; Console.printf
+
+(defn find-recurring-cycle
+  [n]
+  (let [pattern (ref "")
+        s (.substring (str (/ 1.0 n)) 2)]
+    (dosync
+     (doseq [ndx (range (dec (count s)))]
+       (let [s (.substring s ndx)
+             c (str (nth s 0))
+             cndx (.indexOf (.substring s 1) c)]
+         (when (> cndx -1)
+           (let [cndx (inc cndx)
+                 astr (.substring s 0 cndx)
+                 bstr (.substring s cndx)]
+             (if (and (.startsWith bstr astr)
+                      (> (count astr) (count @pattern)))
+               (ref-set pattern astr)))))))
+    @pattern))
+            
+            
+(defn solution
+  []
+  (time
+   (let [num     (ref -1)
+         pattern (ref "")]
+     (dosync
+      (doseq [n (range 1 1000)]
+        (let [pat (find-recurring-cycle n)]
+          (if (> (count pat) (count @pattern))
+            (do
+              (ref-set num n)
+              (ref-set pattern pat))))))
+     (println (str "1 / " @num " = "  (/ 1.0 @num)))
+     (println (str "pattern: " @pattern))
+     (println (str " length: " (count @pattern))))))
+
+          
