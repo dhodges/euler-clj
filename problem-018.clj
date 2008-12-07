@@ -55,24 +55,44 @@
  ( 4  62  98  27  23   9  70  98  73  93  38  53  60   4  23)))
 
 
-(defn make-tree
+(defn make-tree-old
   "returns the root of a tree built up from rows of numbers"
   [rows]
   (let [nodes (ref (map #(struct node % nil nil) (last rows)))]
-    (loop [rows (rest (reverse rows))]
-      (if (empty? rows)
-        (last @nodes)
-        (let [row (first rows)
-              last-nodes (reverse (take (inc (count row)) (reverse @nodes)))]
-          (dosync 
+    (dosync 
+     (loop [rows (rest (reverse rows))]
+       (if (empty? rows)
+         (last @nodes)
+         (let [row (first rows)
+               last-nodes (reverse (take (inc (count row)) (reverse @nodes)))]
            (ref-set nodes 
-                    (concat @nodes 
-                          (for [n (range (count row))]
-                            (struct node (nth row n) 
-                                    (nth last-nodes n) 
-                                    (nth last-nodes (inc n)))))))
-          (recur (rest rows)))))))
+                    (conj @nodes 
+                          (list 
+                           (for [n (range (count row))]
+                             (struct node (nth row n) 
+                                     (nth last-nodes n) 
+                                     (nth last-nodes (inc n)))))))))
+         (recur (rest rows))))))
 
+(defstruct tree-node :val :l-ndx :r-ndx)
+
+(defn make-tree
+  [rows]
+  (let [tree (ref [])]
+    (dosync
+     (loop [rows rows
+            row  (first rows)
+            next (frest fows)]
+       
+       
+  
+
+(defn print-tree
+  [tree]
+  (doseq [row tree]
+    (doseq [n row]
+      (printf "%s " (n :val)))
+    (println)))
         
 (defn take-last
   [n coll]
@@ -184,3 +204,20 @@
 ; try making a new, stripped subtree from the full tree
 ; instead of reading line by line and saving he largest 5 numbers,
 ; just traverse the nodes, saving only the large ones
+
+(def node-comp (proxy [java.util.Comparator] []
+                 (compare [o1 o2] 
+                          (let [v1 (o1 :val) v2 (o2 :val)]
+                            (cond (< v1 v2) -1
+                                  (= v1 v2)  0
+                                  :else      1)))))
+(defn strip
+  [tree]
+  (let [t (ref [])]
+    (dosync
+     (doseq [row tree]
+       (ref-set 
+        t (conj @t (for [node (take 5 (reverse (sort node-comp row)))]
+                     node)))))
+    @t))
+       
