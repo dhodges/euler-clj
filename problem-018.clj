@@ -129,10 +129,11 @@
 ;
 ; Scan each line from top to bottom.
 ; Note the top 5 numbers on each line.
-; For each saved line of 5 numbers, try to connect them up to as many paths as possible.
-; Return the maximum total from all the successful paths.
+; For each saved line of 5 numbers, try to connect as many of them as possible.
+; This will build a considerably smaller subtree, 
+; which can then be searched by brute force.
 
-(defstruct nub :value :index)
+(defstruct nub :value :row-ndx :nub-ndx)
 
 (def nub-comp (proxy [java.util.Comparator] []
                 (compare [o1 o2] 
@@ -142,13 +143,42 @@
                                  :else      1)))))
 (defn max-in-each-row
   [n rows]
-  (for [r rows]
-    (take n 
-          (reverse 
-           (sort nub-comp 
-                 (for [ndx (range (count r))]
-                   (struct nub (nth r ndx) ndx)))))))
+  (for [row-ndx (range (count rows))]
+    (let [r (nth rows row-ndx)]
+      (take n 
+            (reverse 
+             (sort nub-comp 
+                   (for [nub-ndx (range (count r))]
+                     (struct nub (nth r nub-ndx) row-ndx nub-ndx))))))))
          
         
+(defn nodes-adjacent-to-ndx
+  [ndx row]
+  (let [ndx1 ndx 
+        ndx2 (inc ndx)]
+    (for [node row :when (or (= (node :nub-ndx) ndx1)
+                             (= (node :nub-ndx) ndx2))]
+      node)))
+      
                  
+(defn make-new-tree
+  [rows]
+  (let [tree (ref [(first rows)])
+        rows (rest rows)]
+    (dosync
+     (doseq [row-ndx (range (count rows))]
+       (let [r  (last @tree)
+             r1 (nth rows row-ndx)
+             new-tree (reverse (rest (reverse @tree)))]
+         (println (format "   r:  %s" r))
+         (println (format "  r1:  %s" r1))
+         (println (format "tree:  %s" @tree))
+         (ref-set tree
+                  (conj new-tree 
+                        (for [nub r :when (nodes-adjacent-to-ndx (nub :nub-ndx) r1)]
+                          nub))))))
+    @tree))
 
+           
+           
+         
