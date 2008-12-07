@@ -181,4 +181,6 @@
 
            
            
-         
+; try making a new, stripped subtree from the full tree
+; instead of reading line by line and saving he largest 5 numbers,
+; just traverse the nodes, saving only the large ones
