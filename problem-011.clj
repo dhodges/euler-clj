@@ -125,15 +125,19 @@
                     (for [x (range 1 maxX)]
                       (diagonal grid x 1 (dec maxY) -1))))))
 
-(let [mr (partial map reverse)]
-  (println 
-   (reduce max 
-           (map gp-from-4 
-                [grid (mr grid) 
-                 (flip grid) (mr (flip grid))
-                 (diagonal-1 grid) (mr (diagonal-1 grid))
-                 (diagonal-2 grid) (mr (diagonal-2 grid))
-                 ]))))
+(defn solution
+  []
+  (let [mr (partial map reverse)]
+    (reduce max 
+            (map gp-from-4 
+                 [grid (mr grid) 
+                  (flip grid) (mr (flip grid))
+                  (diagonal-1 grid) (mr (diagonal-1 grid))
+                  (diagonal-2 grid) (mr (diagonal-2 grid))
+                  ]))))
 
+(defn test-solution
+  []
+  (= (solution) 70600674))
 
         

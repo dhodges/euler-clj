@@ -59,14 +59,22 @@
     (sort (set factors))))
 
 
-(loop [tnum (struct-map tn :num 1 :n 1)]
-  (let [num (tnum :num)
-        factors (factorise num)]
-    (if (> (count factors) 500)
-      (do
-        (println (format "%s has %s factors:" num (count factors)))
-        (println factors))
-      (recur (next-tn tnum)))))
+(defn solution
+  []
+  (loop [tnum (struct-map tn :num 1 :n 1)]
+    (let [num (tnum :num)
+          factors (factorise num)]
+      (if (> (count factors) 500)
+        (do
+          (println (format "%s has %s factors:" num (count factors)))
+          (println factors))
+        num
+        (recur (next-tn tnum))))))
+
+(defn test-solution
+  []
+  (= (solution) 76576500))
+
 
 
       

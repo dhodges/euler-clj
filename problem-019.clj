@@ -79,7 +79,7 @@
 
           
       
-(defn test
+(defn test-solution
   []
   (= (solution) 171))
 

@@ -54,10 +54,12 @@
         
 
 (defn solution
-  []
-  (let [n 10001]
-    (println)
-    (println (format "nth-prime (%s) : %s" n (nth-prime n)))))
+  [n]
+  (println)
+  (println (format "nth-prime (%s) : %s" n (nth-prime n)))))
 
+(defn test-solution
+  []
+  (= (nth-prime 10001) 104743))
 
 

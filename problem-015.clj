@@ -91,3 +91,7 @@
   ;(printf "%s routes found." (time (dfs endpt)))
   (printf "%s routes found." (time (bfs endpt)))
   )
+
+(defn test-solution
+  []
+  (= (solution) "???"))

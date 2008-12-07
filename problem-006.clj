@@ -41,4 +41,11 @@
   (let [squares (square-of-sums n)
         sums    (sum-of-squares n)]
   (println
-   (format "%s - %s = %s" squares sums (- squares sums)))))
+   (format "%s - %s = %s" squares sums (- squares sums))
+   (- squares sums))))
+
+(defn test-solution
+  []
+  (= (solution) 25164150))
+
+

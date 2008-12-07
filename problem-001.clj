@@ -20,3 +20,6 @@
                               (multiple-of % 5))
                          (range 1000)))))
 
+(defn test-solution
+  []
+  (= (solution) 233168))

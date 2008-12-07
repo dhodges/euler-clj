@@ -89,3 +89,6 @@
              (= 1000 (+ a b c)))
       (print-triple a b c))))
       
+(defn test-solution
+  []
+  (= (solution) 31875000))

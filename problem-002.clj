@@ -24,3 +24,6 @@
   (print (reduce + (take-while #(< % 4000000) 
                                even-fibs))))
   
+(defn test-solution
+  []
+  (= (solution) 4613732))

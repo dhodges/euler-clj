@@ -42,3 +42,7 @@
         x
         (recur (inc x))))))
 
+(defn test-solution
+  []
+  (= (solution) 232792560))
+

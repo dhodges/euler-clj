@@ -111,6 +111,14 @@
   [n]
   (reduce max (pfactors n)))
 
+(defn solution
+  []
+  (largest-prime-factor-of 600851475143))
+
+(defn test-solution
+  []
+  (= (solution) 6857))
+
 ;; =======================================================
 ;; here we go...
 

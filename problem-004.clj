@@ -42,5 +42,11 @@
         pair  (last pairs)
         x (first pair)
         y (second pair)]
-    (println (format "%s * %s = %s" x y (* x y)))))
+    (println (format "%s * %s = %s" x y (* x y)))
+    (* x y)
+    ))
+
+(defn test-solution
+  []
+  (= (find-largest-pair) 906609))
 

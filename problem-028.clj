@@ -50,17 +50,17 @@
 (defn south-east [n] (+ 3 (* n (- n 3))))
 
 (defn solution
-  []
+  [n]
   (time
-   (reduce + 1 (for [n (range 1001 1 -2)]
-                 (+ (north-east n)
-                    (north-west n)
-                    (south-west n)
-                    (south-east n))))))
+   (reduce + 1 (for [x (range n 1 -2)]
+                 (+ (north-east x)
+                    (north-west x)
+                    (south-west x)
+                    (south-east x))))))
 
 
 (defn test-solution
   []
-  (= (solution) 669171001))
+  (= (solution 1001) 669171001))
 
 

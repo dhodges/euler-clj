@@ -34,7 +34,6 @@
                 :else
                 (recur r (+ f 6))))))
 
-
 (defn solution
   []
   (loop [n 1999999 psum 0]
@@ -44,5 +43,6 @@
       (recur (dec n) (if (prime? n) (+ psum n) psum)))))
 
 
-
-
+(defn test-solution
+  []
+  (= (solution) 142913828922))

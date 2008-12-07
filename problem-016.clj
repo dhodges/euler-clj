@@ -34,3 +34,6 @@
    (reduce + (map #(- (int %) 48) 
                   (seq (str (pow 2 1000)))))))
 
+(defn test-solution
+  []
+  (= (solution) 1366))

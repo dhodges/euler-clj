@@ -63,6 +63,7 @@
                 (+ @lettercount (count (written-number i))))))
     (printf "result => %d\n" @lettercount)))
 
-; 21124
 
-
+(defn test-solution
+  []
+  (= (solution) 21124))

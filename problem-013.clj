@@ -213,5 +213,12 @@
       53503534226472524250874054075591789781264330331690
       ])
 
-(reduce #(format "%s%s" %1 %2) (take 10 (str (reduce + numbers))))
+(defn solution
+  []
+  (reduce #(format "%s%s" %1 %2) (take 10 (str (reduce + numbers)))))
+
+(defn test-solution
+  []
+  (= (solution) 5537376230))
+
 

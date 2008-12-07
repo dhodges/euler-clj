@@ -33,18 +33,24 @@
     (cons n (gen-chain (if (even? n) (/ n 2) (inc (* 3 n)))))))
          
 
-(loop [n 1
-       t (struct-map term 
-           :start 13 
-           :chain '(13 40 20 10 5 16 8 4 2 1) 
-           :len 10)]
-  (if (>= n 1000000)
-    (println t)
-    (let [chain (gen-chain n)]
-      (recur (inc n)
-             (if (> (count chain) (t :len))
-               (struct-map term :start n :chain chain :len (count chain))
-               t)))))
+(defn solution
+  []
+  (loop [n 1
+         t (struct-map term 
+             :start 13 
+             :chain '(13 40 20 10 5 16 8 4 2 1) 
+             :len 10)]
+    (if (>= n 1000000)
+      t
+      (let [chain (gen-chain n)]
+        (recur (inc n)
+               (if (> (count chain) (t :len))
+                 (struct-map term :start n :chain chain :len (count chain))
+                 t))))))
+
+(defn test-solution
+  []
+  (= (solution) 837799))
 
 
     

@@ -46,3 +46,6 @@
 
 
 
+(defn test-solution
+  []
+  (= (solution) 40824))
