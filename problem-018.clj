@@ -76,13 +76,13 @@
 
 (defstruct tree-node :val :l-ndx :r-ndx)
 
-(defn make-tree
-  [rows]
-  (let [tree (ref [])]
-    (dosync
-     (loop [rows rows
-            row  (first rows)
-            next (frest fows)]
+;; (defn make-tree
+;;   [rows]
+;;   (let [tree (ref [])]
+;;     (dosync
+;;      (loop [rows rows
+;;             row  (first rows)
+;;             next (frest fows)]
        
        
   
@@ -122,6 +122,7 @@
 
 ; != 849
 ; != 1064
+; != 1068
 
 ; Something to try:
 ;
