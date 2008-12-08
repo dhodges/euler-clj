@@ -49,7 +49,7 @@
   (time
    (apply +
           (filter #(armstrong? % 5)
-                  (range 2 (inc (maximum-armstrong-sum 5)))))))
+                  (range (maximum-armstrong-sum 5) 1 -1)))))
 
 (defn test-solution
   []
