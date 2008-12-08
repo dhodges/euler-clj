@@ -38,7 +38,9 @@
 
 (defstruct node :val :left :right)
 
-(def number-rows           '((75)
+; TODO: construct 'rows' by reading lines of text
+
+(def rows                  '((75)
                            (95  64)
                          (17  47  82)
                        (18  35  87  10)
@@ -55,170 +57,67 @@
  ( 4  62  98  27  23   9  70  98  73  93  38  53  60   4  23)))
 
 
-(defn make-tree-old
-  "returns the root of a tree built up from rows of numbers"
+;; Currently attempt at a solution is to navigate down from the outer extremities,
+;; always choosing the maximum of two choices available from the next row.
+;;
+;;                              ↓
+;;                           ↓ 75 ↓
+;;                         ↓ 95  64 ↓
+;;                       ↓ 17  47  82 ↓
+;;                     ↓ 18  35  87  10 ↓
+;;                   ↓ 20  04  82  47  65 ↓
+;;                 ↓ 19  01  23  75  03  34 ↓
+;;               ↓ 88  02  77  73  07  63  67 ↓
+;;             ↓ 99  65  04  28  06  16  70  92 ↓
+;;           ↓ 41  41  26  56  83  40  80  70  33 ↓
+;;         ↓ 41  48  72  33  47  32  37  16  94  29 ↓
+;;       ↓ 53  71  44  65  25  43  91  52  97  51  14 ↓
+;;     ↓ 70  11  33  28  77  73  17  78  39  68  17  57 ↓
+;;   ↓ 91  71  52  38  17  14  91  43  58  50  27  29  48 ↓
+;; ↓ 63  66  04  68  89  53  67  30  73  16  69  87  40  31 ↓
+;; 04  62  98  27  23  09  70  98  73  93  38  53  60  04  23
+
+
+(defn max-path-from
+  [rows row-ndx nub-ndx]
+  (let [row (nth rows row-ndx)
+        val (nth row  nub-ndx)]
+    (if (= row-ndx (dec (count rows)))
+      (list val)
+      (cons val
+            (let [next (nth rows (inc row-ndx))
+                  a (nth next nub-ndx)
+                  b (nth next (inc nub-ndx))]
+              (if (>= a b)
+                (path-from rows (inc row-ndx) nub-ndx)
+                (path-from rows (inc row-ndx) (inc nub-ndx))))))))
+
+(defn max-paths
   [rows]
-  (let [nodes (ref (map #(struct node % nil nil) (last rows)))]
-    (dosync 
-     (loop [rows (rest (reverse rows))]
-       (if (empty? rows)
-         (last @nodes)
-         (let [row (first rows)
-               last-nodes (reverse (take (inc (count row)) (reverse @nodes)))]
-           (ref-set nodes 
-                    (conj @nodes 
-                          (list 
-                           (for [n (range (count row))]
-                             (struct node (nth row n) 
-                                     (nth last-nodes n) 
-                                     (nth last-nodes (inc n)))))))))
-         (recur (rest rows))))))
 
-(defstruct tree-node :val :l-ndx :r-ndx)
-
-;; (defn make-tree
-;;   [rows]
-;;   (let [tree (ref [])]
-;;     (dosync
-;;      (loop [rows rows
-;;             row  (first rows)
-;;             next (frest fows)]
-       
-       
+  (concat
+   
+   (for [row-ndx (range 1 (count rows))]
+     (concat
+      (for [row-ndx2 (range 0 row-ndx 1)]
+        (first (nth rows row-ndx2)))
+      (max-path-from rows row-ndx 0)))
   
-
-(defn print-tree
-  [tree]
-  (doseq [row tree]
-    (doseq [n row]
-      (printf "%s " (n :val)))
-    (println)))
-        
-(defn take-last
-  [n coll]
-  (reverse (take n (reverse coll))))
+   (for [row-ndx (range 1 (count rows))]
+     (concat
+      (for [row-ndx2 (range 0 row-ndx 1)]
+        (last (nth rows row-ndx2)))
+      (max-path-from rows row-ndx (dec (count (nth rows row-ndx))))))
+  
+   (list (max-path-from rows 0 0))))
 
 
-
-(defn find-max-total
-  [rows]
-  (loop [totals (first rows)
-         rows   (rest rows)]
-    (if (empty? rows)
-      (reduce max totals)
-      (let [row (first rows)
-            last-row (take-last (dec (count row)) totals)
-            new-totals (ref '())]
-        (dosync         
-         (doseq [n (range (count last-row))]
-           (ref-set new-totals 
-                    (concat @new-totals
-                            [(+ (nth last-row n) (nth row n)) 
-                             (+ (nth last-row n) (nth row (inc n)))]))))
-        (recur @new-totals (rest rows))))))
-
-         
-;(find-max-total number-rows)
-
+(defn solution
+  []
+  (time
+   (reduce max (for [row (max-paths rows)] (apply + row)))))
+  
 ; != 849
 ; != 1064
 ; != 1068
 
-; Something to try:
-;
-; Starting from the bottom row choose a subset, e.g. the top five numbers,
-; and for each number chosen work back to the top of the tree,
-; choosing the max of two choices with each step.
-; e.g:
-; 75
-; 95
-; 47
-; 87
-; 82
-; 75
-; 73
-; 28
-; 83
-; 47
-; 43
-; 73
-; 91
-; 67
-; 98
-
-; Something else to try:
-;
-; Scan each line from top to bottom.
-; Note the top 5 numbers on each line.
-; For each saved line of 5 numbers, try to connect as many of them as possible.
-; This will build a considerably smaller subtree, 
-; which can then be searched by brute force.
-
-(defstruct nub :value :row-ndx :nub-ndx)
-
-(def nub-comp (proxy [java.util.Comparator] []
-                (compare [o1 o2] 
-                         (let [v1 (o1 :value) v2 (o2 :value)]
-                           (cond (< v1 v2) -1
-                                 (= v1 v2)  0
-                                 :else      1)))))
-(defn max-in-each-row
-  [n rows]
-  (for [row-ndx (range (count rows))]
-    (let [r (nth rows row-ndx)]
-      (take n 
-            (reverse 
-             (sort nub-comp 
-                   (for [nub-ndx (range (count r))]
-                     (struct nub (nth r nub-ndx) row-ndx nub-ndx))))))))
-         
-        
-(defn nodes-adjacent-to-ndx
-  [ndx row]
-  (let [ndx1 ndx 
-        ndx2 (inc ndx)]
-    (for [node row :when (or (= (node :nub-ndx) ndx1)
-                             (= (node :nub-ndx) ndx2))]
-      node)))
-      
-                 
-(defn make-new-tree
-  [rows]
-  (let [tree (ref [(first rows)])
-        rows (rest rows)]
-    (dosync
-     (doseq [row-ndx (range (count rows))]
-       (let [r  (last @tree)
-             r1 (nth rows row-ndx)
-             new-tree (reverse (rest (reverse @tree)))]
-         (println (format "   r:  %s" r))
-         (println (format "  r1:  %s" r1))
-         (println (format "tree:  %s" @tree))
-         (ref-set tree
-                  (conj new-tree 
-                        (for [nub r :when (nodes-adjacent-to-ndx (nub :nub-ndx) r1)]
-                          nub))))))
-    @tree))
-
-           
-           
-; try making a new, stripped subtree from the full tree
-; instead of reading line by line and saving he largest 5 numbers,
-; just traverse the nodes, saving only the large ones
-
-(def node-comp (proxy [java.util.Comparator] []
-                 (compare [o1 o2] 
-                          (let [v1 (o1 :val) v2 (o2 :val)]
-                            (cond (< v1 v2) -1
-                                  (= v1 v2)  0
-                                  :else      1)))))
-(defn strip
-  [tree]
-  (let [t (ref [])]
-    (dosync
-     (doseq [row tree]
-       (ref-set 
-        t (conj @t (for [node (take 5 (reverse (sort node-comp row)))]
-                     node)))))
-    @t))
-       
