@@ -76,15 +76,6 @@
    (* (d 1) (d 10) (d 100) (d 1000) (d 10000) (d 100000) (d 1000000))))
 
 
-(defn- member?
-  [item coll]
-  (cond (empty? coll)
-        false
-        (= item (first coll))
-        true
-        :else
-        (recur item (rest coll))))
-
 (defn test-solution
   []
   (= (solution) 210))
