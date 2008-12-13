@@ -2,7 +2,9 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+    (:import [java.io File]
+             [org.apache.commons.io FileUtils]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=42
 ;;
@@ -28,10 +30,33 @@
   [n]
   (* (/ n 2) (inc n)))
 
+(defn triangle-number?
+  [num]
+  (loop [n 1]
+    (let [tn (nth-triangle n)]
+      (cond (= num tn) true
+            (< num tn) false
+            :else
+            (recur (inc n))))))
 
-(defn triangles
+(defn triangle-word?
+  [w]
+  (triangle-number?
+   (apply + (map #(- (int %) 64) (.toUpperCase w)))))
+
+(def words 
+     (sort 
+      (.split 
+       (apply str (remove #(= % \")
+                          (FileUtils/readFileToString (new File "words.txt"))))
+       ",")))
+
+(defn solution
   []
-  (let [nth-triangle (fn [n] (* (/ n 2) (inc n)))]
-    (loop [n 1]
-      (lazy-cons (nth-triangle n)
-                 (recur (inc n))))))
+  (time
+   (count (filter triangle-word? words))))
+
+
+(defn test-solution
+  []
+  (= (solution) 162))
