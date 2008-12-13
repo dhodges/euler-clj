@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.duck-streams :only (spit)]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=41
 ;;
@@ -33,26 +34,14 @@
                              factors))))]
     (sort (distinct factors))))
 
-(defn sieve
-  [xs]
-  (let [head (first xs)
-        tail (rest  xs)]
-    (lazy-cons head 
-               (sieve (for [x tail :when (not (factor? x head))] x))
-               )))
-
-(defn primes
-  []
-  (sieve (range 2 (int 1000000000))))
-
 (defn prime?
   [n]
-  (if (and (not (= n 2))
-           (even? n))
+  (if (or (= (rem n 10) 5)
+          (and (even? n) (not (= n 2))))
     false
     (= [1 n] (factorise n))))
 
-(defn- member?
+(defn member?
   [item coll]
   (cond (empty? coll)
         false
@@ -75,11 +64,20 @@
        (pandigital? n)))
 
 
-;; (defn solution
-;;   []
-;;   (time
-;;    (apply max (for [p (take-while #(< % 100000000) (primes))
-;;                     :when (pandigital? p)] p))))
+(defn pandigital-primes-less-than
+  [n]
+  (for [i (range n) :when (pandigital-prime? i)] i))
 
+
+(defn solution
+  []
+  (time
+   (loop [n 987654321]
+     (if (pandigital-prime? n)
+       n
+       (recur (dec n))))))
+
+(println "max pandigital prime < 987654322...")
+(println (solution))
 
 
