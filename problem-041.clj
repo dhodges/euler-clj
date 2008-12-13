@@ -3,7 +3,10 @@
              ]
 
 (ns user
-  (:use [clojure.contrib.duck-streams :only (spit)]))
+  (:use [clojure.contrib.duck-streams :only (spit)])
+  (:use [clojure.contrib.lazy-seqs :only (permutations)])
+  (:use [clojure.contrib.str-utils :only (str-join)])
+  (:import [java.io RandomAccessFile]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=41
 ;;
@@ -58,26 +61,22 @@
               (member? (char (+ 48 i)) nstr)))))
 
         
-(defn pandigital-prime?
-  [n]
-  (and (prime? n)
-       (pandigital? n)))
-
-
-(defn pandigital-primes-less-than
-  [n]
-  (for [i (range n) :when (pandigital-prime? i)] i))
+(defn permutations-of
+  [num]
+  (map #(Integer/parseInt %)
+       (reverse
+        (sort (map #(apply str %) (permutations (str num)))))))
 
 
 (defn solution
   []
   (time
-   (loop [n 987654321]
-     (if (pandigital-prime? n)
-       n
-       (recur (dec n))))))
+   (first (filter prime? (mapcat permutations-of [987654321
+                                                  87654321
+                                                  7654321))))))
 
-(println "max pandigital prime < 987654322...")
-(println (solution))
 
+(defn test-solution
+  []
+  (= (solution) 7652413))
 
