@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.lazy-seqs :only (permutations)]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=24
 ;;
@@ -21,7 +22,36 @@
 ;; 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?
 
 (defn fac
+  "factorial"
   [n]
-  (if (= 1 n)
-    1
-    (* n (fac (dec n)))))
+  (cond (= n 1)
+        1
+        (= n 0)
+        1
+        :else
+        (* n (fac (dec n)))))
+
+; see:
+; http://forums.xkcd.com/viewtopic.php?f=11&t=28832#p926767
+
+(defn solution
+  []
+  (time
+   (loop [soln   []
+          digits [0 1 2 3 4 5 6 7 8 9]
+          remain 999999
+          f      9]
+     (if (> remain 0)
+       (let [n (quot remain (fac f))
+             c (nth digits n)]
+         (recur (conj soln c)
+                (concat (take n digits) (drop (inc n) digits))
+                (- remain (* (fac f) n))
+                (dec f)))
+       (apply str (conj soln (nth digits 0)))))))
+
+
+(defn test-solution
+  []
+  (= (solution) 278391546))
+
