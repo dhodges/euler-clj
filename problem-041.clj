@@ -63,7 +63,7 @@
         
 (defn permutations-of
   [num]
-  (map #(Integer/parseInt %)
+  (map #(Long/parseLong %)
        (reverse
         (sort (map #(apply str %) (permutations (str num)))))))
 
