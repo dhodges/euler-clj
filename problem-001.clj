@@ -14,12 +14,12 @@
   (= java.lang.Integer (class (/ x y))))
 
 
-(defn solution
+(defn euler-001
   []
   (print (reduce + (filter #(or (multiple-of % 3)
-                              (multiple-of % 5))
-                         (range 1000)))))
+                                (multiple-of % 5))
+                           (range 1000)))))
 
 (defn test-solution
   []
-  (= (solution) 233168))
+  (= (euler-001) 233168))
