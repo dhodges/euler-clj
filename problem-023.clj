@@ -44,49 +44,57 @@
     (sort (distinct (conj factors 1)))))
 
 
-(defn perfect?
-  [n]
-  (= n (apply + (proper-divisors n))))
+(defn perfect?   [n] (= n (apply + (proper-divisors n))))
 
-(defn deficient?
-  [n]
-  (> n (apply + (proper-divisors n))))  
-  
-(defn abundant?
-  [n]
-  (< n (apply + (proper-divisors n))))
+(defn deficient? [n] (> n (apply + (proper-divisors n))))  
+ 
+(defn abundant?  [n] (< n (apply + (proper-divisors n))))
 
+(defn member-num?
+  "assumes coll is a sorted list of numbers"
+  [item coll]
+  (cond (empty? coll)
+        false
+        (= item (first coll))
+        true
+        (> item (first coll))
+        false
+        :else
+        (recur item (rest coll))))
 
-(defn abundant-numbers-less-than
+(def abundants (filter abundant? (range 12 28123)))
+
+(defn is-abundant? [n] (member-num? n abundants))
+
+(defn sums-2-abundants?
   [n]
-  (filter abundant? (range 12 n)))
-
+  (let [half (quot n 2)]
+    (if (is-abundant? half)
+      [half half]
+      (loop [diff 1]
+        (let [n1 (- n diff)]
+          (cond (= diff half)
+                false
+                (and (is-abundant? n1)
+                     (is-abundant? diff))
+                [n1 diff]
+                :else
+                (recur (inc diff))))))))
 
 (defn solution
   []
   (time
-   (let [abundants (ref (reverse (abundant-numbers-less-than 28123)))
-         results   (ref [])]
-     (dosync
-      (doseq [n (range 28123 1 -1)]
-        (ref-set abundants (drop-while #(> % n) @abundants))
-        (let [found (ref false)
-              num-abundants (count @abundants)]
-          (loop [ndx 0]
-            (if (< ndx num-abundants)
-              (if (abundant? (- n (nth @abundants ndx)))
-                (ref-set found true)
-                (if (not @found)
-                  (recur (inc ndx))))))
+   (apply +
+          (filter #(not (sums-2-abundants? %))
+                  (range 2 28123)))))
+    
 
-          (if (not @found)
-            (ref-set results (conj @results n))))))
-
-     (apply + @results))))
-
-
-; != 4178875
-; != 4178876
+(defn test-solution
+  []
+  (not (member-num? (solution) [4178875
+                                4178876
+                                395437453
+                                3954374534])))
 
 
   
