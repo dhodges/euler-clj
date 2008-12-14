@@ -24,7 +24,6 @@
                (take 10 (reverse (str (reduce + (for [n (range 1 1001)] (pow n n))))))))))
 
 
-
 (defn test-solution
   []
   (= (solution) 9110846700))
