@@ -69,7 +69,8 @@
 (defn sums-2-abundants?
   [n]
   (let [half (quot n 2)]
-    (if (is-abundant? half)
+    (if (and (even? n)
+             (is-abundant? half))
       [half half]
       (loop [diff 1]
         (let [n1 (- n diff)]
@@ -85,8 +86,8 @@
   []
   (time
    (apply +
-          (filter #(not (sums-2-abundants? %))
-                  (range 2 28123)))))
+          (lazy-cons 1 (filter #(not (sums-2-abundants? %))
+                               (range 2 28123))))))
     
 
 (defn test-solution
@@ -94,7 +95,8 @@
   (not (member-num? (solution) [4178875
                                 4178876
                                 395437453
-                                395437454])))
+                                395437454
+                                395437479])))
 
 
   
