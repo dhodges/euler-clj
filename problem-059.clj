@@ -58,9 +58,8 @@
                             
 (defn convert
   [text key]
-  (.toLowerCase
    (reduce str (map #(char %)
-                    (text-xor text key)))))
+                    (text-xor text key))))
 
 (defn char-in-range?
   [c]
@@ -78,24 +77,29 @@
 (defn decrypted?
   [text]
   (and (text-in-range? text)
-       (or (< -1 (.indexOf text "and"))
-           (< -1 (.indexOf text "the")))
+       (< -1 (.indexOf text "and"))
+       (< -1 (.indexOf text "the"))
+       (< -1 (.indexOf text ". "))
+       (< -1 (.indexOf text ", "))
        ))
 
 (defn solution
   []
   (time
    (let [text (get-text)]
-     (doseq [a (range 128)
-             b (range 128)
-             c (range 128)]
+     (doseq [a (range 97 123)
+             b (range 97 123)
+             c (range 97 123)]
        (let [test-text (convert text (cycle [a b c]))]
          (if (decrypted? test-text)
-           (do
+           (let [sum (apply + (map #(int (char %)) test-text))]
              (println test-text)
-             (println [a b c]))))))))
+             (printf "%s\n\n" sum)
+             sum)))))))
 
+(defn test-solution
+  []
+  (= (solution) 107359))
 
    
    
-(solution)
