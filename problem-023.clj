@@ -57,7 +57,7 @@
         false
         (= item (first coll))
         true
-        (> item (first coll))
+        (< item (first coll))
         false
         :else
         (recur item (rest coll))))

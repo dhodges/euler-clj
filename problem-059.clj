@@ -83,7 +83,7 @@
        (< -1 (.indexOf text ", "))
        ))
 
-(defn solution
+(defn euler-059
   []
   (time
    (let [text (get-text)]
@@ -97,9 +97,9 @@
              (printf "%s\n\n" sum)
              sum)))))))
 
-(defn test-solution
+(defn test-euler-059
   []
-  (= (solution) 107359))
+  (= (euler-059) 107359))
 
    
    
