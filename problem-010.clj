@@ -34,15 +34,15 @@
                 :else
                 (recur r (+ f 6))))))
 
-(defn solution
+(defn euler-010
   []
-  (loop [n 1999999 psum 0]
-    (println n)
-    (if (= n 1)
-      (println (format "==> %s" psum))
-      (recur (dec n) (if (prime? n) (+ psum n) psum)))))
+  (time
+   (loop [n 1999999 psum 0]
+     (if (= n 1)
+       psum
+       (recur (dec n) (if (prime? n) (+ psum n) psum))))))
 
 
-(defn test-solution
+(defn test-euler-010
   []
-  (= (solution) 142913828922))
+  (= (euler-010) 142913828922))

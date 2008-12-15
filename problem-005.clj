@@ -34,15 +34,16 @@
           (recur (first others) (rest others)))))
 
       
-(defn solution
+(defn euler-005
   []
-  (let [divisors (range 1 20)]
-    (loop [x 20]
-      (if (evenly-divisible-by-all? x divisors)
-        x
-        (recur (inc x))))))
+  (time
+   (let [divisors (range 1 20)]
+     (loop [x 20]
+       (if (evenly-divisible-by-all? x divisors)
+         x
+         (recur (inc x)))))))
 
-(defn test-solution
+(defn test-euler-005
   []
-  (= (solution) 232792560))
+  (= (euler-005) 232792560))
 

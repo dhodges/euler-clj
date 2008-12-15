@@ -48,18 +48,17 @@
           (if (= count 2)
             (last primes)
             (let [next (next-prime primes)]
-              (println (format "%s: %s" count next))
               (recur (conj primes next)
                      (dec count)))))))
         
 
-(defn solution
-  [n]
-  (println)
-  (println (format "nth-prime (%s) : %s" n (nth-prime n)))))
-
-(defn test-solution
+(defn euler-007
   []
-  (= (nth-prime 10001) 104743))
+  (time
+   (nth-prime 10001)))
+
+(defn test-euler-007
+  []
+  (= (euler-007) 104743))
 
 

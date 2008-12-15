@@ -11,15 +11,15 @@
 
 (defn multiple-of
   [x y]
-  (= java.lang.Integer (class (/ x y))))
+  (= (rem x y) 0))
 
 
 (defn euler-001
   []
-  (print (reduce + (filter #(or (multiple-of % 3)
-                                (multiple-of % 5))
-                           (range 1000)))))
+  (reduce + (filter #(or (multiple-of % 3)
+                         (multiple-of % 5))
+                    (range 1000))))
 
-(defn test-solution
+(defn test-euler-001
   []
   (= (euler-001) 233168))

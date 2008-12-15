@@ -36,16 +36,15 @@
   (let [sum (sums-of n)]
     (* sum sum)))
 
-(defn solution
-  [n]
-  (let [squares (square-of-sums n)
-        sums    (sum-of-squares n)]
-  (println
-   (format "%s - %s = %s" squares sums (- squares sums))
-   (- squares sums))))
-
-(defn test-solution
+(defn euler-006
   []
-  (= (solution) 25164150))
+  (time
+   (let [squares (square-of-sums 100)
+         sums    (sum-of-squares 100)]
+     (- squares sums))))
+
+(defn test-euler-006
+  []
+  (= (euler-006) 25164150))
 
 

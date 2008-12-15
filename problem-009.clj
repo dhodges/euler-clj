@@ -43,14 +43,12 @@
   (loop [n 1]
     (let [[a b c] (make-triple n)
           total   (+ (* a a) (* b b) (* c c))]
-      (println (format "%s + %s + %s = %s" a b c (+ a b c)))
       (cond (= total 1000)
             '(a b c)
             (> total 1000000)
-            (println "cannot find a triple such that a + b + c = 1000")
+            nil
             :else
-            (recur (inc n)))))
-
+            (recur (inc n))))))
 
 (defn euclid-triple
   [m n]
@@ -80,15 +78,16 @@
   (println (format "%s * %s * %s = %s" a b c (* a b c))))
 
 
-(defn solution
+(defn euler-009
   []
-  (doseq [a (range 1001)
-          b (range (inc a) 1001)
-          c (range (inc b) 1001)]
-    (if (and (triple? a b c)
-             (= 1000 (+ a b c)))
-      (print-triple a b c))))
+  (time
+   (for [a (range 1001)
+         b (range (inc a) 1001)
+         c (range (inc b) 1001)
+         :when (and (triple? a b c) (= 1000 (+ a b c)))]
+       (* a b c))))
       
-(defn test-solution
+(defn test-euler-009
   []
-  (= (solution) 31875000))
+  (= (euler-009) 31875000))
+

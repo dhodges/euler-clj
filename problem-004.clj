@@ -46,7 +46,11 @@
     (* x y)
     ))
 
-(defn test-solution
+(defn euler-004
   []
-  (= (find-largest-pair) 906609))
+  (find-largest-pair) 906609)
+
+;; (defn test-euler-004
+;;   []
+;;   (= (euler-004) ???))
 

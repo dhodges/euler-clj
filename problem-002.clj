@@ -19,11 +19,11 @@
 
 (def even-fibs (filter even? fibs))
 
-(defn solution
+(defn euler-002
   []
-  (print (reduce + (take-while #(< % 4000000) 
-                               even-fibs))))
+  (reduce + (take-while #(< % 4000000) 
+                        even-fibs)))
   
-(defn test-solution
+(defn test-euler-002
   []
-  (= (solution) 4613732))
+  (= (euler-002) 4613732))

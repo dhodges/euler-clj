@@ -111,13 +111,13 @@
   [n]
   (reduce max (pfactors n)))
 
-(defn solution
+(defn euler-003
   []
   (largest-prime-factor-of 600851475143))
 
-(defn test-solution
+(defn test-euler-003
   []
-  (= (solution) 6857))
+  (= (euler-003) 6857))
 
 ;; =======================================================
 ;; here we go...
@@ -180,20 +180,3 @@
                last-factor
                (+ 2 factor))))))
           
-      
-            
-           
-(println "(overview-solution 600851475143)")
-(. System/out flush)
-(println (time (overview-solution 600851475143)))
-(. System/out flush)
-
-
-(println "(overview-solution-2 600851475143)")
-(. System/out flush)
-(println (time (overview-solution-2 600851475143)))
-(. System/out flush)
-
-
-
-
