@@ -3,7 +3,16 @@
              ]
 
 (ns user
-  (:use [clojure.contrib.seq-utils :only (flatten)]))
+  (:use [clojure.contrib.seq-utils :only (flatten)])
+  (:use [project_euler.dh_utils :only (prime?)])
+  (:use [clojure.contrib.test-is])
+  )
+
+
+
+; 2008-12-16
+; currently get an error when trying to use clojure.contrib.test-is
+; "Unable to resolve symbol: newmap in this context (template.clj:97)"
 
 ;; http://projecteuler.net/index.php?section=problems&id=58
 ;;
@@ -43,35 +52,38 @@
 ;; 110  73  74  75  76  77  78  79  80  81  82
 ;; 111 112 113 114 115 116 117 118 119 120 121
 
-(defn factor?
-  [x y]
-  (= (rem x y) 0))
 
-(defn factorise
-  "return the factors of the given number"
-  [n]
-  (let [squint (int (Math/floor (Math/sqrt n)))]
-    (sort (distinct
-           (loop [x 1 factors '()]
-             (if (> x squint)
-               factors
-               (recur (inc x)
-                      (if (factor? n x)
-                        (concat [x (/ n x)] factors)
-                        factors))))))))
+;; (defn factor?
+;;   [x y]
+;;   (= (rem x y) 0))
 
-(defn prime?
-  [n]
-  (if (or (= (rem n 10) 5)
-          (and (even? n) (not (= n 2))))
-    false
-    (= [1 n] (factorise n))))
+;; (defn factorise
+;;   "return the factors of the given number"
+;;   [n]
+;;   (let [squint (int (Math/floor (Math/sqrt n)))]
+;;     (sort (distinct
+;;            (loop [x 1 factors '()]
+;;              (if (> x squint)
+;;                factors
+;;                (recur (inc x)
+;;                       (if (factor? n x)
+;;                         (concat [x (/ n x)] factors)
+;;                         factors))))))))
+
+;; (defn prime?
+;;   [n]
+;;   (= [1 n] (factorise n)))
+
+(defn nth-odd  [n] (- (* 2 n) 1))
+(defn nth-even [n] (- (* 2 n) 2))
 
 (defn sqr [n] (* n n))
-(defn nw  [n] (sqr (- (* 2 n) 2)))
-(defn ne  [n] (inc (* (- (* 2 n) 2) (- (* 2 n) 3))))
-(defn se  [n] (sqr (- (* 2 n) 1)))
-(defn sw  [n] (* (- (* 2 n) 1) (- (* 2 n) 2)))
+(defn nw  [n] (inc (sqr (nth-even n))))
+(defn ne  [n] (inc (* (nth-even n)
+                      (dec (nth-even n)))))
+(defn se  [n] (sqr (nth-odd n)))
+(defn sw  [n] (inc (* (nth-odd n)
+                      (nth-even n))))
 
 (defn member-of-sequence?
   "assumes coll is a sorted list of numbers"
@@ -86,23 +98,49 @@
         (recur item (rest coll))))
 
 (defn ratio-of-primes
-  [n]
-  (/ (count
-      (filter prime?
-              (flatten (for [i (range 2 (inc n))]
-                        [(ne i) (nw i) (sw i)]))))
-     (- (* 3 n) 2)))
+  [n-sides]
+  (let [n (/ (inc n-sides) 2)]
+    (/ (count
+        (filter prime?
+                (flatten (for [i (range 2 (inc n))]
+                           [(ne i) (nw i) (sw i)]))))
+       (- (* 4 n) 3))))
                      
 (defn euler-58
   []
   (time
-   (loop [n 2]
-     (if (< (ratio-of-primes n) (/ 1 10))
-       (dec (* 2 n))
-       (recur (inc n))))))
+   (let [threshold (/ 1.0 10.0)]
+     (loop [n-sides 2]
+       (let [r (ratio-of-primes n-sides)]
+         (if (< r threshold)
+           n-sides
+           (recur (+ n-sides 2))))))))
 
 (defn test-euler-58
   []
   (not (member-of-sequence? (euler-58) [121
                                         241
                                         693])))
+
+;(println (euler-58))
+
+(deftest test-nw
+  (is (= (map nw (range 2 7))
+         [5 17 37 65 101])))
+
+(deftest test-ne
+  (is (= (map ne (range 2 7))
+         [3 13 31 57  91])))
+
+(deftest test-sw
+  (is (= (map sw (range 2 7))
+         [7 21 43 73 111])))
+
+(deftest test-se
+  (is (= (map se (range 2 7))
+         [9 25 49 81 121])))
+
+(deftest test-ratio-of-primes
+  (is (= (ratio-of-primes 7)
+         8/13)))
+
