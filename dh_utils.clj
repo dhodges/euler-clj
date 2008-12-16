@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns dh_utils
+(ns project_euler.dh_utils
   (:use [clojure.contrib.lazy-seqs :only (primes)]))
 
 
