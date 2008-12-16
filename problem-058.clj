@@ -53,49 +53,17 @@
 ;; 111 112 113 114 115 116 117 118 119 120 121
 
 
-;; (defn factor?
-;;   [x y]
-;;   (= (rem x y) 0))
-
-;; (defn factorise
-;;   "return the factors of the given number"
-;;   [n]
-;;   (let [squint (int (Math/floor (Math/sqrt n)))]
-;;     (sort (distinct
-;;            (loop [x 1 factors '()]
-;;              (if (> x squint)
-;;                factors
-;;                (recur (inc x)
-;;                       (if (factor? n x)
-;;                         (concat [x (/ n x)] factors)
-;;                         factors))))))))
-
-;; (defn prime?
-;;   [n]
-;;   (= [1 n] (factorise n)))
-
 (defn nth-odd  [n] (- (* 2 n) 1))
 (defn nth-even [n] (- (* 2 n) 2))
 
 (defn sqr [n] (* n n))
+
 (defn nw  [n] (inc (sqr (nth-even n))))
 (defn ne  [n] (inc (* (nth-even n)
                       (dec (nth-even n)))))
 (defn se  [n] (sqr (nth-odd n)))
 (defn sw  [n] (inc (* (nth-odd n)
                       (nth-even n))))
-
-(defn member-of-sequence?
-  "assumes coll is a sorted list of numbers"
-  [item coll]
-  (cond (empty? coll)
-        false
-        (= item (first coll))
-        true
-        (< item (first coll))
-        false
-        :else
-        (recur item (rest coll))))
 
 (defn ratio-of-primes
   [n-sides]
@@ -110,17 +78,40 @@
   []
   (time
    (let [threshold (/ 1.0 10.0)]
-     (loop [n-sides 2]
-       (let [r (ratio-of-primes n-sides)]
-         (if (< r threshold)
-           n-sides
-           (recur (+ n-sides 2))))))))
+     (loop [n        4
+            n-sides  7
+            n-primes 8
+            n-diagonals 13]
+       (let [ratio-of-primes (/ n-primes n-diagonals)]
+         (if (< ratio-of-primes threshold)
+           (printf "n-sides: %s (%s)\n" n-sides ratio-of-primes)
+           (let [n (+ n 4)]
+             (recur n
+                    (+ n-sides 2)
+                    (+ n-primes
+                       (count (filter prime? [(ne n) (nw n) (sw n)])))
+                    (+ n-diagonals 4)))))))))
+
+
+(defn member-of-sequence?
+  "assumes coll is a sorted list of numbers"
+  [item coll]
+  (cond (empty? coll)
+        false
+        (= item (first coll))
+        true
+        (< item (first coll))
+        false
+        :else
+        (recur item (rest coll))))
+
 
 (defn test-euler-58
   []
-  (not (member-of-sequence? (euler-58) [121
-                                        241
-                                        693])))
+  (is (not (member-of-sequence? (euler-58) [121
+                                            241
+                                            693
+                                            6851]))))
 
 ;(println (euler-58))
 
