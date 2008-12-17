@@ -4,9 +4,8 @@
 
 (ns user
   (:use [clojure.contrib.seq-utils :only (flatten)])
-  (:use [project_euler.dh_utils :only (prime?)])
-  (:use [clojure.contrib.test-is])
-  )
+  (:use [project_euler.dh_utils    :only (prime?)])
+  (:use [clojure.contrib.test-is]))
 
 
 
@@ -84,8 +83,8 @@
             n-diagonals 13]
        (let [ratio-of-primes (/ n-primes n-diagonals)]
          (if (< ratio-of-primes threshold)
-           (printf "n-sides: %s (%s)\n" n-sides ratio-of-primes)
-           (let [n (+ n 4)]
+           n-sides
+           (let [n (inc n)]
              (recur n
                     (+ n-sides 2)
                     (+ n-primes
@@ -108,12 +107,9 @@
 
 (defn test-euler-58
   []
-  (is (not (member-of-sequence? (euler-58) [121
-                                            241
-                                            693
-                                            6851]))))
+  (= (euler-58) 26241))
 
-;(println (euler-58))
+
 
 (deftest test-nw
   (is (= (map nw (range 2 7))
