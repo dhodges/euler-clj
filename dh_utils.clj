@@ -50,17 +50,29 @@
         :else
         (= (ldp n) n)))
 
-;; (defn pfactors
-;;   [n]
-;;   (cond (< n 1)
-;;         (throw (new Exception "argument not positive"))
-;;         (= n 1)
-;;         []
-;;         :else
-;;         (let [p (ld n)]
-;;           (lazy-cat [p] (pfactors (quot n p))))))
+(defn pfactors
+  [n]
+  (cond (< n 1)
+        (throw (new Exception "argument not positive"))
+        (= n 1)
+        []
+        :else
+        (let [p (ld n)]
+          (lazy-cons p (pfactors (quot n p))))))
 
 
 
 
-; (time (count (map prime? (range 2 1000000))))
+(defn member-of-sequence?
+  "assumes coll is a sorted list of numbers"
+  [item coll]
+  (cond (empty? coll)
+        false
+        (= item (first coll))
+        true
+        (< item (first coll))
+        false
+        :else
+        (recur item (rest coll))))
+
+
