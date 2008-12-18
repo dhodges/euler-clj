@@ -60,7 +60,7 @@
         (let [p (ld n)]
           (lazy-cons p (pfactors (quot n p))))))
 
-
+; -----------------------------------------------------
 
 
 (defn member-of-sequence?
@@ -74,5 +74,24 @@
         false
         :else
         (recur item (rest coll))))
+
+
+(defn factor?
+  [x y]
+  (= (rem x y) 0))
+
+
+(defn proper-divisors
+  "return the proper divisors of the given number"
+  [n]
+  (let [squint  (int (Math/floor (Math/sqrt n)))
+        factors (loop [x 2 factors '()]
+                  (if (> x squint)
+                    factors
+                    (recur (inc x)
+                           (if (factor? n x)
+                             (concat [x (/ n x)] factors)
+                             factors))))]
+    (sort (distinct (conj factors 1)))))
 
 
