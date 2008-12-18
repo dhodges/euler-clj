@@ -95,12 +95,28 @@
     (sort (distinct (conj factors 1)))))
 
 
+(defn member?
+  [item coll]
+  (cond (empty? coll)
+        false
+        (= item (first coll))
+        true
+        :else
+        (recur item (rest coll))))
+
+
+(defn strcontains?
+  [s chr]
+  (< -1 (.indexOf s (str chr))))
+
+(defn strcat
+  [& items]
+  (apply str (apply concat (map str items))))
+
+
 (defn pandigital?
   [n]
   (let [nstr (str n)]
     (reduce #(and %1 %2)
             (for [i (range 1 (inc (count nstr)))]
-              (member? (char (+ 48 i)) nstr)))))
-
-        
-
+              (strcontains? nstr (char (+ 48 i)))))))
