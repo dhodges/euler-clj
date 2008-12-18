@@ -2,7 +2,9 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns dh.euler)
+(ns dh.euler
+  (:use [project_euler.dh_utils])
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=23
 
@@ -26,63 +28,33 @@
 ;; Find the sum of all the positive integers which cannot be written as the sum of 
 ;; two abundant numbers.
 
-(defn factor?
-  [x y]
-  (= (rem x y) 0))
+(defn perfect?     [n] (= n (apply + (proper-divisors n))))
 
-(defn proper-divisors
-  "return the proper divisors of the given number"
-  [n]
-  (let [squint  (int (Math/floor (Math/sqrt n)))
-        factors (loop [x 2 factors '()]
-                  (if (> x squint)
-                    factors
-                    (recur (inc x)
-                           (if (factor? n x)
-                             (concat [x (/ n x)] factors)
-                             factors))))]
-    (sort (distinct (conj factors 1)))))
-
-
-(defn perfect?   [n] (= n (apply + (proper-divisors n))))
-
-(defn deficient? [n] (> n (apply + (proper-divisors n))))  
+(defn deficient?   [n] (> n (apply + (proper-divisors n))))  
  
-(defn abundant?  [n] (< n (apply + (proper-divisors n))))
-
-(defn member-num?
-  "assumes coll is a sorted list of numbers"
-  [item coll]
-  (cond (empty? coll)
-        false
-        (= item (first coll))
-        true
-        (< item (first coll))
-        false
-        :else
-        (recur item (rest coll))))
+(defn abundant?    [n] (< n (apply + (proper-divisors n))))
 
 (def abundants (filter abundant? (range 12 28123)))
 
-(defn is-abundant? [n] (member-num? n abundants))
+(defn is-abundant? [n] (member-of-sequence? n abundants))
 
 (defn sums-2-abundants?
   [n]
   (let [half (quot n 2)]
     (if (and (even? n)
              (is-abundant? half))
-      [half half]
+      true
       (loop [diff 1]
         (let [n1 (- n diff)]
           (cond (= diff half)
                 false
                 (and (is-abundant? n1)
                      (is-abundant? diff))
-                [n1 diff]
+                true
                 :else
                 (recur (inc diff))))))))
 
-(defn solution
+(defn euler-23
   []
   (time
    (apply +
@@ -90,13 +62,14 @@
                                (range 2 28123))))))
     
 
-(defn test-solution
-  []
-  (not (member-num? (solution) [4178875
-                                4178876
-                                395437453
-                                395437454
-                                395437479])))
+(deftest test-euler-23
+  (is (not (member-of-sequence? (euler-23) [4178875
+                                            4178876
+                                            395437453
+                                            395437454
+                                            395437479]))))
+
+
 
 
   
