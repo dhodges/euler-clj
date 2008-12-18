@@ -95,3 +95,12 @@
     (sort (distinct (conj factors 1)))))
 
 
+(defn pandigital?
+  [n]
+  (let [nstr (str n)]
+    (reduce #(and %1 %2)
+            (for [i (range 1 (inc (count nstr)))]
+              (member? (char (+ 48 i)) nstr)))))
+
+        
+
