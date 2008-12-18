@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user
+(ns dh.euler
+  (:use [project_euler.dh_utils]
   (:use [clojure.contrib.duck-streams :only (spit)])
   (:use [clojure.contrib.lazy-seqs :only (permutations)])
   (:use [clojure.contrib.str-utils :only (str-join)])
@@ -53,14 +54,6 @@
         :else
         (recur item (rest coll))))
 
-(defn pandigital?
-  [n]
-  (let [nstr (str n)]
-    (reduce #(and %1 %2)
-            (for [i (range 1 (inc (count nstr)))]
-              (member? (char (+ 48 i)) nstr)))))
-
-        
 (defn permutations-of
   [num]
   (map #(Long/parseLong %)
