@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user
+(ns dh.euler
   (:use [project_euler.dh_utils])
   (:use [clojure.contrib.test-is]))
 
@@ -39,7 +39,7 @@
 
 ; Console.printf
 
-(defn find-recurring-cycle
+(defn find-recurring-cycle-old
   [n]
   (let [cycle (ref "")
         s     (.substring (str (/ 1.0 n)) 2)]
@@ -47,6 +47,25 @@
      (doseq [ndx (range (dec (count s)))]
        (let [s (.substring s ndx)
              c (str (first s))
+             cndx (.indexOf (.substring s 1) c)]
+         (when (> cndx -1)
+           (let [cndx (inc cndx)
+                 astr (.substring s 0 cndx)
+                 bstr (.substring s cndx)]
+             (if (and (.startsWith bstr astr)
+                      (> (count astr) (count @cycle)))
+               (ref-set cycle astr)))))))
+    @cycle))
+
+
+(defn find-recurring-cycle
+  [n]
+  (let [cycle (ref "")
+        s     (.substring (str (/ 1.0 n)) 2)]
+    (dosync
+     (doseq [ndx (range (dec (count s)))]
+       (let [s    (.substring s ndx)
+             c    (apply str (take 4 s))
              cndx (.indexOf (.substring s 1) c)]
          (when (> cndx -1)
            (let [cndx (inc cndx)
@@ -67,42 +86,21 @@
     (println (str "      " indent " -> " cycle " <-"))))
 
 
-(defn euler-26
-  []
-  (time
-   (loop [n      2
-          num   -1
-          cycle ""]
-     (if (>= n 1000)
-       [num cycle]
-       (let [pat  (find-recurring-cycle n)
-             num  (if (> (count pat) (count cycle))
-                    n
-                    num)
-             cycle (if (> (count pat) (count cycle))
-                     pat
-                     cycle)]
-         (recur (inc n)
-                num
-                cycle))))))
-                
-                
 (defn find-cycles
   []
-  (time
-   (loop [n 2
-          cycles []]
-     (if (>= n 1000)
-       cycles
-       (let [cycle (find-recurring-cycle n)]
-         (recur (inc n)
-                (if (> (count cycle) 1)
-                  (conj cycles [n cycle])
-                  cycles)))))))
+  (loop [n 2
+         cycles []]
+    (if (>= n 1000)
+      cycles
+      (let [cycle (find-recurring-cycle n)]
+        (recur (inc n)
+               (if (> (count cycle) 1)
+                 (conj cycles [n cycle])
+                 cycles))))))
 
 (defn print-cycles
   []
-  (let [cycles (find-cycles-new)
+  (let [cycles (find-cycles)
         comp   (proxy [java.util.Comparator] []
                  (compare [o1 o2]
                           (let [len1 (count (second o1))
@@ -117,6 +115,23 @@
       (printf "%s\n" c))))
 
 
+(defn euler-26
+  []
+  (time
+   (loop [n      2
+          num   -1
+          cycle ""]
+     (if (>= n 1000)
+       [num cycle]
+       (let [pat  (find-recurring-cycle n)
+             [num cycle] (if (> (count pat) (count cycle))
+                           [n pat]
+                           [num cycle])]
+         (recur (inc n)
+                num
+                cycle))))))
+                
+                
 (deftest test-euler-26
   (is (not (member-of-sequence? (euler-26)
                                [405
