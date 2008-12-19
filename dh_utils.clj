@@ -131,3 +131,9 @@
         :else
         (* n (fac (dec n)))))
 
+
+(defn palindrome?
+  [s]
+  (= s (apply str (reverse s))))
+
+
