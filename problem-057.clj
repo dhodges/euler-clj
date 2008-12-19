@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns dh.euler
+  (:use [project_euler.dh_utils]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=57
 
@@ -47,7 +48,7 @@
   (let [n (.numerator r) d (.denominator r)]
     (> (count (str n)) (count (str d)))))
 
-(defn solution
+(defn euler-57
   []
   (time
    (loop [r     (/ 3 2)
@@ -64,7 +65,7 @@
                   count)))))))
 
 
-(defn test-solution
+(deftest test-euler-57
   []
   (= (solution) 153))
 
