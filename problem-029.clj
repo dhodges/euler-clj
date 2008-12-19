@@ -43,7 +43,8 @@
 
 (deftest test-euler-29
   (is (not (member-of-sequence? (euler-29)
-                                [9188]))))
+                                [9188
+                                 9387]))))
 
 (deftest test-distinct-terms
   (is (= (count (distinct-terms 5)) 15)))
