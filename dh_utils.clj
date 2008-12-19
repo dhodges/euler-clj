@@ -120,3 +120,14 @@
     (reduce #(and %1 %2)
             (for [i (range 1 (inc (count nstr)))]
               (strcontains? nstr (char (+ 48 i)))))))
+
+(defn fac
+  "factorial"
+  [n]
+  (cond (= n 0)
+        1
+        (= n 1)
+        1
+        :else
+        (* n (fac (dec n)))))
+
