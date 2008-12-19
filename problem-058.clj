@@ -2,9 +2,9 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user
+(ns dh.euler
   (:use [clojure.contrib.seq-utils :only (flatten)])
-  (:use [project_euler.dh_utils    :only (prime?)])
+  (:use [project_euler.dh_utils])
   (:use [clojure.contrib.test-is]))
 
 
@@ -92,23 +92,9 @@
                     (+ n-diagonals 4)))))))))
 
 
-(defn member-of-sequence?
-  "assumes coll is a sorted list of numbers"
-  [item coll]
-  (cond (empty? coll)
-        false
-        (= item (first coll))
-        true
-        (< item (first coll))
-        false
-        :else
-        (recur item (rest coll))))
 
-
-(defn test-euler-58
-  []
+(deftest test-euler-58
   (= (euler-58) 26241))
-
 
 
 (deftest test-nw
