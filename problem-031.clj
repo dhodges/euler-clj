@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns dh.euler
+  (:use [project_euler.dh_utils]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=31
 ;;
@@ -21,42 +22,66 @@
 ;; How many different ways can £2 be made using any number of coins?
 
 
-(def coins '(100 50 20 5 2 1))
+(def coins [200 100 50 20 5 2 1])
 
 (defn set-nth
   "set the nth item of sequence, counted 0...n-1"
   [sequ ndx item]
   (concat (take (dec ndx) sequ) [1] (drop ndx sequ)))
 
-(defn generate-partitions
-  "incomplete"
-  [n]
-  (let [x (ref (cons n (for [x (range (dec n))] 1)))
-        m (ref 1)
-        h (ref 1)]
-    (println (take 1 @x))
-    (dosync
-     (while (not (= (first @x) 1))
-       (if (= (nth @x (dec @h)) 2)
-         (do
-           (ref-set m (inc @m))
-           (ref-set x (set-nth @x (dec @h) 1))
-           (ref-set h (- @h 1)))
-         (do
-           (let [r (- (nth @x (- @h 1)) 1)
-                 t (ref (inc (- @m @h)))]
-             (ref-set x (set-nth @x (dec @h) r))
-             (while (>= @t r)
-               (ref-set h (inc @h))
-               (ref-set x (set-nth @x (dec @h) r))
-               (ref-set t (- @t @r)))
+(defn min-above-1
+  [seq]
+  (apply min (filter #(> % 1) seq)))
 
-             (if (= @t 0)
-               (ref-set m @h)
-               (do
-                 (ref-set m (inc @h))
-                 (if (> @t 1)
-                   (ref-set h (inc @h))
-                   (ref-set x (set-nth @x (dec @h) @t))))))))
-       (println @x)))))
+(defn decr
+  [n]
+  (cond (= n 200)
+        100
+        (= n 100)
+        50
+        (= n 50)
+        20
+        (= n 20)
+        10
+        (= n 10)
+        5
+        (= n 5)
+        2
+        (= n 2)
+        1))
+
+(defn rindex-of
+  "index (0...n-1) of the last instance of item in seq"
+  [seq item]
+  (let [len  (count seq)
+        seq2 (reverse seq)]
+    (loop [ndx 0]
+      (if (>= ndx len)
+        -1
+        (let [x (nth seq2 ndx)]
+          (if (= x item)
+            (- len ndx 1)
+            (recur (inc ndx))))))))
+    
+
+(defn generate-partitions
+  [n]
+  (if (not (member-of-sequence? n coins))
+    (throw
+     (new Exception
+          (format "n must be a member of the sequence: %s" coins)))
+    (loop [partitions [[n]]]
+      (let [partition  (last partitions)]
+        (if (= (first partition) 1)
+          partitions
+          (let [least (min-above-1 partition)
+                ndx   (rindex-of partition least)
+                least (decr least)
+                part  (conj (take ndx partition) least)
+                sum   (apply + part)
+                part  (concat part (for [x (range (quot (- n sum) least))] least))
+                sum   (apply + part)
+                partition (concat part (for [x (range (- n sum))] 1))]
+            (recur (conj partitions
+                         (reverse (sort partition))))))))))
 
