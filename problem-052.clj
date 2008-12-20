@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns dh.euler)
 
 ;; http://projecteuler.net/index.php?section=problems&id=52
 ;;
@@ -28,7 +28,7 @@
 
 
 ; brute force
-(defn solution
+(defn euler-52
   []
   (time
    (loop [n 1]
@@ -37,6 +37,6 @@
            :else
            (recur (inc n))))))
 
-(defn test-solution
+(defn test-euler-52
   []
   (= (solution) 142857))
