@@ -112,7 +112,7 @@ def partition_zs1(n):
     x[0] = n
     m = 1
     h = 1
-    print x[0]
+    print x[:1]
     while x[0] != 1:
         if x[h-1] == 2:
             m = m +1
@@ -133,7 +133,27 @@ def partition_zs1(n):
                 if t > 1:
                     h = h + 1
                     x[h-1] = t
-        print x
+        ndx   = 0
+        total = 0
+        while total < n:
+            total += x[ndx]
+            ndx += 1
+
+        print x[:ndx]
+
+# ------------------------------------------------------------------
+
+def min_above_1(seq):
+    return min(filter(lambda x:x>1, seq))
+
+
+def partitions(n):
+    partition = [n]
+    print partition
+    while max(partition) > 1:
+
+
+
 
 # ------------------------------------------------------------------
 
