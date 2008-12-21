@@ -3,7 +3,8 @@
              ]
 
 (ns dh.euler
-  (:use [project_euler.dh_utils]))
+  (:use [project_euler.dh_utils])
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=31
 ;;
@@ -33,7 +34,8 @@
   [seq]
   (apply min (filter #(> % 1) seq)))
 
-(defn decr
+
+(defn dec-coins
   [n]
   (cond (= n 200)
         100
@@ -65,22 +67,33 @@
     
 
 (defn generate-partitions
-  [n]
-  (if (not (member-of-sequence? n coins))
-    (throw
-     (new Exception
-          (format "n must be a member of the sequence: %s" coins)))
-    (loop [partitions [[n]]]
-      (let [partition  (last partitions)]
-        (if (= (first partition) 1)
-          partitions
-          (let [least (min-above-1 partition)
-                ndx   (rindex-of partition least)
-                least (decr least)
-                part  (into (into [] (take ndx partition)) [least])
-                sum   (apply + part)
-                part  (into part (for [x (range (quot (- n sum) least))] least))
-                sum   (apply + part)
-                partition (into part (for [x (range (- n sum))] 1))]
-            (recur (conj partitions partition))))))))
+  ([n]
+     (generate-partitions n dec))
+  ([n decfn]
+     (loop [partitions [[n]]]
+       (let [partition  (last partitions)]
+         (if (= (first partition) 1)
+           partitions
+           (let [least (min-above-1 partition)
+                 ndx   (rindex-of partition least)
+                 least (decfn least)
+                 part  (into (into [] (take ndx partition)) [least])
+                 sum   (apply + part)
+                 part  (into part (for [x (range (quot (- n sum) least))] least))
+                 sum   (apply + part)
+                 partition (into part (for [x (range (- n sum))] 1))]
+             (recur (conj partitions partition))))))))
 
+
+(defn generate-coin-partitions
+  [n]
+  (generate-partitions n dec-coins))
+
+
+
+
+(deftest test-generate-coin-partitions
+  (= (count (generate-coin-partitions 50)) 441))
+
+(deftest test-generate-partitions
+  (= (count (generate-partitions 10)) 33))
