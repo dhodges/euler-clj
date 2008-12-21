@@ -22,7 +22,7 @@
 ;; How many different ways can £2 be made using any number of coins?
 
 
-(def coins [200 100 50 20 5 2 1])
+(def coins [1 2 5 10 20 50 100 200])
 
 (defn set-nth
   "set the nth item of sequence, counted 0...n-1"
@@ -77,11 +77,10 @@
           (let [least (min-above-1 partition)
                 ndx   (rindex-of partition least)
                 least (decr least)
-                part  (conj (take ndx partition) least)
+                part  (into (into [] (take ndx partition)) [least])
                 sum   (apply + part)
-                part  (concat part (for [x (range (quot (- n sum) least))] least))
+                part  (into part (for [x (range (quot (- n sum) least))] least))
                 sum   (apply + part)
-                partition (concat part (for [x (range (- n sum))] 1))]
-            (recur (conj partitions
-                         (reverse (sort partition))))))))))
+                partition (into part (for [x (range (- n sum))] 1))]
+            (recur (conj partitions partition))))))))
 
