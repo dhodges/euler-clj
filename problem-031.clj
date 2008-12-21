@@ -50,7 +50,11 @@
         (= n 5)
         2
         (= n 2)
-        1))
+        1
+        (= n 1)
+        (throw (new Exception "cannot decrement coins any lower than 1"))
+        :else
+        (- n 1)))
 
 (defn rindex-of
   "index (0...n-1) of the last instance of item in seq"
@@ -85,15 +89,42 @@
              (recur (conj partitions partition))))))))
 
 
-(defn generate-coin-partitions
+(defn count-partitions
+  ([n]
+     (count-partitions n dec))
+  ([n decfn]
+     (loop [partition [n]
+            count     1]
+         (if (= (first partition) 1)
+           count
+           (let [least (min-above-1 partition)
+                 ndx   (rindex-of partition least)
+                 least (decfn least)
+                 part  (into (into [] (take ndx partition)) [least])
+                 sum   (apply + part)
+                 part  (into part (for [x (range (quot (- n sum) least))] least))
+                 sum   (apply + part)
+                 partition (into part (for [x (range (- n sum))] 1))]
+             (recur partition
+                    (inc count)))))))
+
+
+(defn count-coin-partitions
   [n]
-  (generate-partitions n dec-coins))
+  (count-partitions n dec-coins))
 
 
 
 
 (deftest test-generate-coin-partitions
-  (= (count (generate-coin-partitions 50)) 441))
+  (= (count-coin-partitions 50) 441))
 
 (deftest test-generate-partitions
-  (= (count (generate-partitions 10)) 33))
+  (= (count-partitions 10) 33))
+
+(deftest test-count-coin-partitions
+  (is (not (member-of-sequence?
+            (count-coin-partitions 200)
+            [73652
+             73653]))))
+
