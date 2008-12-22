@@ -59,15 +59,13 @@
 (defn rindex-of
   "index (0...n-1) of the last instance of item in seq"
   [seq item]
-  (let [len  (count seq)
-        seq2 (reverse seq)]
-    (loop [ndx 0]
-      (if (>= ndx len)
-        -1
-        (let [x (nth seq2 ndx)]
-          (if (= x item)
-            (- len ndx 1)
-            (recur (inc ndx))))))))
+  (loop [ndx (dec (count seq))]
+    (cond (< ndx 0)
+          -1
+          (= (nth seq ndx) item)
+          ndx
+          :else
+          (recur (dec ndx)))))
     
 
 (defn generate-partitions
