@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user
+(ns dh.euler
   (:use [clojure.contrib.str-utils :only (str-join)])
   (:import [java.io File]
            [org.apache.commons.io FileUtils]))

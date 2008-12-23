@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns dh.euler)
 
 ;; http://projecteuler.net/index.php?section=problems&id=33
 ;;
@@ -87,7 +87,7 @@
 
 
 
-(defn solution
+(defn euler-033
   []
   (time
    (let [result (reduce * (map #(/ (first %) (second %))
@@ -95,6 +95,6 @@
          [n d] (.split (str result) "/")]
      (Integer/valueOf d))))
 
-(defn test-solution
+(defn test-euler-033
   []
   (= 100 (solution)))

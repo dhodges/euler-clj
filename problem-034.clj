@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns dh.euler)
 
 ;; http://projecteuler.net/index.php?section=problems&id=34
 ;;
@@ -42,13 +42,13 @@
              (fac (Integer/parseInt (str c))))))
 
 
-(defn solution
+(defn euler-034
   []
   (time
    (apply + (for [n (range 3 (inc *upper-bound*))
                   :when (= n (facsum n))]
               n))))
 
-(defn test-solution
+(defn test-euler-034
   []
   (= (solution) 40730))

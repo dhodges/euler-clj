@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns dh.euler)
 
 ;; http://projecteuler.net/index.php?section=problems
 ;;
@@ -30,13 +30,13 @@
        (palindrome? (Integer/toString n 2))))
 
 
-(defn solution
+(defn euler-036
   []
   (time
    (apply + (for [n (range 1000000)
                   :when (palindromic-both? n)] n))))
 
 
-(defn test-solution
+(defn test-euler-036
   []
   (= (solution) 872187))

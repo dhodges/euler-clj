@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns dh.euler)
 
 ;; http://projecteuler.net/index.php?section=problems&id=37
 ;;
@@ -70,12 +70,12 @@
 
 (def *upper-limit* 739397)
 
-(defn solution
+(defn euler-037
   []
   (time
    (apply + (for [n (range 8 (inc *upper-limit*))
                   :when (truncatable-prime? n)] n))))
 
-(defn test-solution
+(defn test-euler-037
   []
   (= (solution) 748317))

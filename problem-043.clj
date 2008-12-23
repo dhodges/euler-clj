@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user
+(ns dh.euler
   (:use [clojure.contrib.lazy-seqs :only (permutations)]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=43
@@ -49,7 +49,7 @@
        (map #(apply str %) (permutations (str num)))))
 
 
-(defn solution
+(defn euler-043
   []
   (time
    (apply + (filter bingo (permutations-of 9876543210)))))

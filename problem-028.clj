@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns dh.euler)
 
 ;; http://projecteuler.net/index.php?section=problems&id=28
 ;;
@@ -49,7 +49,7 @@
 (defn south-west [n] (+ 2 (* n (- n 2))))
 (defn south-east [n] (+ 3 (* n (- n 3))))
 
-(defn solution
+(defn euler-028
   [n]
   (time
    (reduce + 1 (for [x (range n 1 -2)]
@@ -59,7 +59,7 @@
                     (south-east x))))))
 
 
-(defn test-solution
+(defn test-euler-028
   []
   (= (solution 1001) 669171001))
 

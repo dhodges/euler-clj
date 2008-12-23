@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user
+(ns dh.euler
     (:import [java.io File]
              [org.apache.commons.io FileUtils]))
 
@@ -51,12 +51,12 @@
                           (FileUtils/readFileToString (new File "words.txt"))))
        ",")))
 
-(defn solution
+(defn euler-042
   []
   (time
    (count (filter triangle-word? words))))
 
 
-(defn test-solution
+(defn test-euler-042
   []
   (= (solution) 162))

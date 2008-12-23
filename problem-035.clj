@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns dh.euler)
 
 ;; http://projecteuler.net/index.php?section=problems&id=35
 ;;
@@ -71,14 +71,14 @@
                (for [i (range (count (str n)))]
                  (prime? (rotate-left-num n i))))))
 
-(defn solution
+(defn euler-035
   []
   (time
    (count
     (for [n (range 2 1000000) :when (circular-prime? n)] n))))
 
 
-(defn test-solution
+(defn test-euler-035
   []
   (= (solution) 55))
 

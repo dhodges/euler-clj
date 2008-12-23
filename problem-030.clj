@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns dh.euler)
 
 ;; http://projecteuler.net/index.php?section=problems&id=30
 ;;
@@ -44,14 +44,14 @@
   [k]
   (* k (pow (- 10 1) k)))
 
-(defn solution
+(defn euler-030
   []
   (time
    (apply +
           (filter #(armstrong? % 5)
                   (range (maximum-armstrong-sum 5) 1 -1)))))
 
-(defn test-solution
+(defn test-euler-030
   []
   (= (solution) 443839))
 
