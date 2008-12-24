@@ -93,6 +93,3 @@
   (printf "%s routes found." (time (bfs endpt)))
   )
 
-(deftest test-euler-015
-  []
-  (= (solution) "???"))
