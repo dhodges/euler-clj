@@ -2,7 +2,9 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns dh.euler)
+(ns dh.euler
+  (:use [clojure.contrib.test-is])
+  (:use [project_euler.dh_utils]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=32
 ;;
@@ -23,3 +25,33 @@
 
 
 
+(defn divisor-pairs
+  [n]
+  (loop [divisors (rest (proper-divisors n))
+         pairs    []]
+    (if (empty? divisors)
+      pairs
+      (recur (rest (reverse (rest divisors)))
+             (conj pairs [(first divisors) (last divisors)])))))
+
+(defn pandigital-mmp?
+  [pair product]
+  (pandigital-str? (str (first pair) (second pair) product)))
+
+987654321
+
+
+(deftest test-pandigital-mmp?
+  (is (= (pandigital-mmp? (list 39 186) 7254) true)))
+
+
+; Notes
+; - only test triples (multiplicand/multiplier/product) of length 9 digits
+; - lower/upper bounds = 123456788/987654320 ?
+
+
+(defn rubble
+  [n]
+  (filter #(pandigital-str? (apply str %))
+          (filter #(= 9 (count (apply str %)))
+                  (map #(conj % n) (divisor-pairs n)))))
