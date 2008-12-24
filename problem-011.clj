@@ -125,7 +125,7 @@
                     (for [x (range 1 maxX)]
                       (diagonal grid x 1 (dec maxY) -1))))))
 
-(defn solution
+(defn euler-011
   []
   (let [mr (partial map reverse)]
     (reduce max 
@@ -136,7 +136,7 @@
                   (diagonal-2 grid) (mr (diagonal-2 grid))
                   ]))))
 
-(defn test-solution
+(deftest test-euler-011
   []
   (= (solution) 70600674))
 
