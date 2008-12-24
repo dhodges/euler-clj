@@ -3,6 +3,7 @@
              ]
 
 (ns user
+  (:use [clojure.contrib.test-is])
   (:use [clojure.contrib.lazy-seqs :only (permutations)]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=24
@@ -34,7 +35,7 @@
 ; see:
 ; http://forums.xkcd.com/viewtopic.php?f=11&t=28832#p926767
 
-(defn solution
+(defn euler-024
   []
   (time
    (loop [soln   []
@@ -51,7 +52,7 @@
        (apply str (conj soln (nth digits 0)))))))
 
 
-(defn test-solution
+(deftest test-euler-024
   []
   (= (solution) 278391546))
 
