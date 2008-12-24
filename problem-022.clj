@@ -3,9 +3,9 @@
              ]
 
 (ns user
-  (:import 
-   [java.io File]
-   [org.apache.commons.io FileUtils]))
+  (:use [clojure.contrib.test-is])
+  (:import [java.io File]
+           [org.apache.commons.io FileUtils]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=22
 ;;
@@ -37,14 +37,14 @@
   (* n (apply + (map #(- (int %) 64) name))))
 
 
-(defn solution
+(defn euler-022
   []
   (time
    (apply + (for [n (range (count names))]
               (name-score (nth names n) (inc n))))))
 
 
-(defn test-solution
+(defn test-euler-022
   []
   (= (solution) 871198282))
 
