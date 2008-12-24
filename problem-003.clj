@@ -3,7 +3,8 @@
              ]
 
 (ns user
-    (:import [java.lang.Math]))
+  (:use [clojure.contrib.test-is])
+  (:import [java.lang.Math]))
 
 ;; The prime factors of 13195 are 5, 7, 13 and 29.
 ;;
@@ -115,7 +116,7 @@
   []
   (largest-prime-factor-of 600851475143))
 
-(defn test-euler-003
+(deftest test-euler-003
   []
   (= (euler-003) 6857))
 

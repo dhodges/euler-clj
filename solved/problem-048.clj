@@ -3,7 +3,8 @@
              ]
 
 (ns dh.euler
-  (:use [project_euler.dh_utils]))
+  (:use [project_euler.dh_utils])
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=48
 ;;
@@ -25,6 +26,6 @@
                (take 10 (reverse (str (reduce + (for [n (range 1 1001)] (pow n n))))))))))
 
 
-(defn test-euler-48
+(deftest test-euler-48
   []
   (= (solution) 9110846700))

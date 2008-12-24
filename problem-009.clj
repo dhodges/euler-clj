@@ -2,8 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
-
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=9
 ;;
@@ -87,7 +87,7 @@
          :when (and (triple? a b c) (= 1000 (+ a b c)))]
        (* a b c))))
       
-(defn test-euler-009
+(deftest test-euler-009
   []
   (= (euler-009) 31875000))
 

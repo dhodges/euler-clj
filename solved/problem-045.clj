@@ -3,7 +3,8 @@
              ]
 
 (ns dh.euler
-  (:use [project_euler.dh_utils]))
+  (:use [project_euler.dh_utils])
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=45
 
@@ -61,7 +62,7 @@
          (recur (inc n)))))))
 
 
-(defn test-euler-45
+(deftest test-euler-45
   []
   (= (solution) 1533776805))
 

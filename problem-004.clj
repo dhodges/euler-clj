@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=4
 ;;
@@ -46,11 +47,7 @@
     (* x y)
     ))
 
-(defn euler-004
+(deftest euler-004
   []
   (find-largest-pair) 906609)
-
-;; (defn test-euler-004
-;;   []
-;;   (= (euler-004) ???))
 

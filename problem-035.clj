@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns dh.euler)
+(ns dh.euler
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=35
 ;;
@@ -78,7 +79,7 @@
     (for [n (range 2 1000000) :when (circular-prime? n)] n))))
 
 
-(defn test-euler-035
+(deftest test-euler-035
   []
   (= (solution) 55))
 

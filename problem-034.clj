@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns dh.euler)
+(ns dh.euler
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=34
 ;;
@@ -49,6 +50,6 @@
                   :when (= n (facsum n))]
               n))))
 
-(defn test-euler-034
+(deftest test-euler-034
   []
   (= (solution) 40730))

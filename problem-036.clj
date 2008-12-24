@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns dh.euler)
+(ns dh.euler
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems
 ;;
@@ -37,6 +38,6 @@
                   :when (palindromic-both? n)] n))))
 
 
-(defn test-euler-036
+(deftest test-euler-036
   []
   (= (solution) 872187))

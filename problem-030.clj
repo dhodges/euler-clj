@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns dh.euler)
+(ns dh.euler
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=30
 ;;
@@ -51,7 +52,7 @@
           (filter #(armstrong? % 5)
                   (range (maximum-armstrong-sum 5) 1 -1)))))
 
-(defn test-euler-030
+(deftest test-euler-030
   []
   (= (solution) 443839))
 

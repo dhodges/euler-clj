@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=8
 
@@ -44,6 +45,6 @@
                       (conj ns (str-product (take 5 s)))
                       (drop 1 s))))))))
 
-(defn test-euler-008
+(deftest test-euler-008
   []
   (= (euler-008) 40824))

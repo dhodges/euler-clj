@@ -3,8 +3,9 @@
              ]
 
 (ns dh.euler
-    (:import [java.io File]
-             [org.apache.commons.io FileUtils]))
+  (:use [clojure.contrib.test-is])
+  (:import [java.io File]
+           [org.apache.commons.io FileUtils]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=42
 ;;
@@ -51,12 +52,12 @@
                           (FileUtils/readFileToString (new File "words.txt"))))
        ",")))
 
-(defn euler-042
+(defn euler-42
   []
   (time
    (count (filter triangle-word? words))))
 
 
-(defn test-euler-042
+(deftest test-euler-42
   []
   (= (solution) 162))

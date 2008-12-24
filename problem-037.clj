@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns dh.euler)
+(ns dh.euler
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=37
 ;;
@@ -76,6 +77,6 @@
    (apply + (for [n (range 8 (inc *upper-limit*))
                   :when (truncatable-prime? n)] n))))
 
-(defn test-euler-037
+(deftest test-euler-037
   []
   (= (solution) 748317))

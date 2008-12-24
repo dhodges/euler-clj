@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns dh.euler)
+(ns dh.euler
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=33
 ;;
@@ -95,6 +96,6 @@
          [n d] (.split (str result) "/")]
      (Integer/valueOf d))))
 
-(defn test-euler-033
+(deftest test-euler-033
   []
   (= 100 (solution)))

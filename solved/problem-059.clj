@@ -3,6 +3,7 @@
              ]
 
 (ns dh.euler
+  (:use [clojure.contrib.test-is])
   (:use [clojure.contrib.str-utils :only (str-join)])
   (:import [java.io File]
            [org.apache.commons.io FileUtils]))
@@ -97,7 +98,7 @@
              (printf "%s\n\n" sum)
              sum)))))))
 
-(defn test-euler-059
+(deftest test-euler-059
   []
   (= (euler-059) 107359))
 
