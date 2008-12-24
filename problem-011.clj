@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 
 ;; http://projecteuler.net/index.php?section=problems&id=11
