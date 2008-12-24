@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 ;; Problem 13
 
@@ -213,11 +214,11 @@
       53503534226472524250874054075591789781264330331690
       ])
 
-(defn solution
+(defn euler-013
   []
   (reduce #(format "%s%s" %1 %2) (take 10 (str (reduce + numbers)))))
 
-(defn test-solution
+(deftest test-euler-013
   []
   (= (solution) 5537376230))
 

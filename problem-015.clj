@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 ;; Problem 15
 ;;
@@ -86,12 +87,12 @@
 
 #! ==========================================================
 
-(defn solution
+(defn euler-015
   [endpt]
   ;(printf "%s routes found." (time (dfs endpt)))
   (printf "%s routes found." (time (bfs endpt)))
   )
 
-(defn test-solution
+(deftest test-euler-015
   []
   (= (solution) "???"))

@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=20
 ;;
@@ -20,13 +21,13 @@
     (* n (fib (dec n)))))
 
         
-(defn solution
+(defn euler-020
   []
   (time
    (apply + 
           (map #(- (int %) 48)
                (str (fib 100))))))
 
-(defn test-solution
+(deftest test-euler-020
   []
   (= (solution) 648))

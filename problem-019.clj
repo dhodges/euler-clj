@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems
 ;;
@@ -65,7 +66,7 @@
     (struct date dow (d :dom) month year)))
                     
 
-(defn solution
+(defn euler-019
   []
   (time
    (with-local-vars [count 0]
@@ -78,8 +79,7 @@
            (recur (next-month date))))))))
 
           
-      
-(defn test-solution
+(deftest test-euler-019
   []
   (= (solution) 171))
 

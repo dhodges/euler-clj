@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 ;; Problem 12
 ;;
@@ -59,7 +60,7 @@
     (sort (set factors))))
 
 
-(defn solution
+(defn euler-012
   []
   (loop [tnum (struct-map tn :num 1 :n 1)]
     (let [num (tnum :num)
@@ -71,7 +72,7 @@
         num
         (recur (next-tn tnum))))))
 
-(defn test-solution
+(deftest test-euler-012
   []
   (= (solution) 76576500))
 

@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=21
 ;;
@@ -64,11 +65,11 @@
     (filter (complement s?) (tree-seq s? seq x))))              
       
 
-(defn solution 
+(defn euler-021 
   []
  (time
   (apply + (flatten (amicable-pairs-less-than 10000)))))
 
-(defn test-solution
+(deftest test-euler-021
   []
   (= (solution) 31626))

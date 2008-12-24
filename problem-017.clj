@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 ;; Problem 17
 ;; 17 May 2002
@@ -54,7 +55,7 @@
 
       @word)))
   
-(defn solution
+(defn euler-017
   []
   (let [lettercount (ref 0)]
     (dosync 
@@ -64,6 +65,6 @@
     (printf "result => %d\n" @lettercount)))
 
 
-(defn test-solution
+(deftest test-euler-017
   []
   (= (solution) 21124))

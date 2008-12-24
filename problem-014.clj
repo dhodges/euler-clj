@@ -2,7 +2,8 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [clojure.contrib.test-is]))
 
 ;; Problem 14
 
@@ -33,7 +34,7 @@
     (cons n (gen-chain (if (even? n) (/ n 2) (inc (* 3 n)))))))
          
 
-(defn solution
+(defn euler-014
   []
   (loop [n 1
          t (struct-map term 
@@ -48,7 +49,7 @@
                  (struct-map term :start n :chain chain :len (count chain))
                  t))))))
 
-(defn test-solution
+(deftest test-euler-014
   []
   (= (solution) 837799))
 

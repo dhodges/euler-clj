@@ -2,7 +2,9 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user)
+(ns user
+  (:use [project_euler.dh_utils])
+  (:use [clojure.contrib.test-is]))
 
 ;; Problem 18
 ;; 31 May 2002
@@ -116,12 +118,13 @@
    (list (max-path-from rows 0 0))))
 
 
-(defn solution
+(defn euler-018
   []
   (time
    (reduce max (for [row (max-paths rows)] (apply + row)))))
-  
-; != 849
-; != 1064
-; != 1068
+
+(deftest test-euler-018
+  (= (not (member-of-sequence? (euler-018) [849
+                                            1064
+                                            1068]))))
 
