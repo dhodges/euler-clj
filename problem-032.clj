@@ -34,24 +34,31 @@
       (recur (rest (reverse (rest divisors)))
              (conj pairs [(first divisors) (last divisors)])))))
 
-(defn pandigital-mmp?
-  [pair product]
-  (pandigital-str? (str (first pair) (second pair) product)))
-
-987654321
-
-
-(deftest test-pandigital-mmp?
-  (is (= (pandigital-mmp? (list 39 186) 7254) true)))
-
 
 ; Notes
 ; - only test triples (multiplicand/multiplier/product) of length 9 digits
 ; - lower/upper bounds = 123456788/987654320 ?
 
 
-(defn rubble
+(defn pandigital-mmp?
   [n]
-  (filter #(pandigital-str? (apply str %))
-          (filter #(= 9 (count (apply str %)))
-                  (map #(conj % n) (divisor-pairs n)))))
+  (filter #(let [s (apply str %)]
+             (and (pandigital-str? s) (= 9 (count s))))
+          (map #(conj % n) (divisor-pairs n))))
+
+
+(defn euler-32
+  []
+  (time
+   (let [numbers (filter #(not (nil? %))
+                         (for [x (range 10000)]
+                           (first (pandigital-mmp? x))))]
+     (apply + (for [n nums]
+                (last n))))))
+
+
+
+(deftest test-pandigital-mmp?
+  (is (= (pandigital-mmp? (list 39 186) 7254) true)))
+
+
