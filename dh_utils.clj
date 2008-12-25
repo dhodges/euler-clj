@@ -114,15 +114,15 @@
   (apply str (apply concat (map str items))))
 
 
-(defn pandigital?
-  [n]
-  (pandigital-str? (str n)))
-
 (defn pandigital-str?
   [nstr]
   (reduce #(and %1 %2)
           (for [i (range 1 (inc (count nstr)))]
             (strcontains? nstr (char (+ 48 i))))))
+
+(defn pandigital?
+  [n]
+  (pandigital-str? (str n)))
 
 (defn fac
   "factorial"
