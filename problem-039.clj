@@ -20,12 +20,6 @@
 ;;
 ;; For which value of p ≤ 1000, is the number of solutions maximised?
 
-(defn integral-square?
-  "is 'n' the square of an integral?"
-  [n]
-  (let [sqint (int (Math/sqrt n))]
-    (= n (* sqint sqint))))
-
 
 (defn triangle-partition?
   [triple]
@@ -40,9 +34,9 @@
    (map sort
         (apply concat
                (filter #(not (nil? %))
-                       (for [c (range 5 n)]
+                       (for [c (range (int (/ n 2)) n)]
                          (let [diff (- n c)]
-                           (for [a (range 1 diff)]
+                           (for [a (range (int (/ diff 2)) diff)]
                              (let [b (- diff a)]
                                [a b c])))))))))
           
@@ -51,3 +45,22 @@
   (filter triangle-partition?
           (partitions n)))
 
+
+(defn count-partitions
+  [n]
+  (count (triangle-partitions n)))
+
+
+(defn euler-039
+  []
+  (time
+   (loop [n    12
+          count 1]
+     (if (> n 1000)
+       {:count count, :num n}
+       (recur (inc n)
+              (count-partitions n))))))
+
+
+(deftest test-partitions
+  (= 11 (count (partitions 12))))
