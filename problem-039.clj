@@ -34,10 +34,10 @@
        (* c c))))
 
 
-(defn triangle-partitions
+(defn partitions
   [n]
   (distinct
-   (map sort 
+   (map sort
         (apply concat
                (filter #(not (nil? %))
                        (for [c (range 5 n)]
@@ -46,9 +46,8 @@
                              (let [b (- diff a)]
                                [a b c])))))))))
           
-          
 (defn triangle-partitions
   [n]
-  (filter (triangle-partition?
-           (triangle-partitions n))))
+  (filter triangle-partition?
+          (partitions n)))
 
