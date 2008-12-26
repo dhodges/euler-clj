@@ -32,14 +32,13 @@
   [n]
   (distinct
    (map sort
-        (apply concat
-               (filter #(not (nil? %))
-                       (for [c (range (int (/ n 2)) n)]
-                         (let [diff (- n c)]
-                           (for [a (range (int (/ diff 2)) diff)]
-                             (let [b (- diff a)]
-                               [a b c])))))))))
-          
+        (let [n2 (inc (/ n 2))]
+          (for [a (range 1 n2)
+                b (range a n2)
+                :when (< a b (- n a b))]
+            [a b (- n (+ a b))])))))
+
+
 (defn triangle-partitions
   [n]
   (filter triangle-partition?
