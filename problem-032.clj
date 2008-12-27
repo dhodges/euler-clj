@@ -62,3 +62,6 @@
   (is (= (pandigital-mmp? (list 39 186) 7254) true)))
 
 
+(deftest test-euler-32
+  (= (euler-32) 45228))
+
