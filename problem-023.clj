@@ -32,7 +32,8 @@
 
 (defn deficient?   [n] (> n (apply + (proper-divisors n))))  
  
-(defn abundant?    [n] (< n (apply + (proper-divisors n))))
+(defn abundant?    [n] (and (not (odd? n))
+                            (< n (apply + (proper-divisors n)))))
 
 (def abundants (filter abundant? (range 12 28123)))
 
@@ -40,16 +41,17 @@
 
 (defn sums-2-abundants?
   [n]
-  (let [half (quot n 2)]
-    (if (and (even? n)
-             (is-abundant? half))
-      true
-      (loop [diff 1]
-        (let [n1 (- n diff)]
+  (if (odd? n)
+    false
+    (let [half (quot n 2)]
+      (if (and (= (* 2 half) n)
+               (abundant? half))
+        true
+        (loop [diff 1]
           (cond (= diff half)
                 false
-                (and (is-abundant? n1)
-                     (is-abundant? diff))
+                (and (abundant? diff)
+                     (abundant? (- n diff)))
                 true
                 :else
                 (recur (inc diff))))))))
