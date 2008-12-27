@@ -2,8 +2,9 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user
-  (:use [clojure.contrib.test-is]))
+(ns dh.euler
+  (:use [clojure.contrib.test-is])
+  (:use [project_euler.dh_utils]))
 
 ;; Problem 15
 ;;
@@ -33,15 +34,6 @@
 
 (def *numroutes* (ref 0))
 
-(defn- member?
-  [item coll]
-  (cond (empty? coll)
-        false
-        (= item (first coll))
-        true
-        :else
-        (recur item (rest coll))))
-
 (defn- dfs-1
   [path pt endpt]
   (if (and (in-range pt endpt)
@@ -61,35 +53,34 @@
 
 #! http://en.wikipedia.org/wiki/Breadth-first_search
           
-(def paths-to-check (ref [[(struct pair 0 0)]]))
 
 (defn bfs
   [endpt]
-  (dosync (ref-set paths-to-check [[(struct pair 0 0)]]))
   (let [numroutes (ref 0)]
-    (loop []
-      (printf "%d paths\n" (count @paths-to-check))
-      (if (empty? @paths-to-check)
+    (loop [paths-to-check [[(struct pair 0 0)]]]
+      (if (empty? paths-to-check)
         @numroutes
         (do
-
-          (doseq [p @paths-to-check]
+          (doseq [p paths-to-check]
             (if (= endpt (last p))
               (dosync (ref-set numroutes (inc @numroutes)))))
 
-          (dosync (ref-set paths-to-check 
-                           (for [p  @paths-to-check
-                                 pt (next-2-points (last p))
-                                 :when (in-range pt endpt)]
-                             (concat p [pt]))))
-          (recur)
+          (recur (for [p  paths-to-check
+                       pt (next-2-points (last p))
+                       :when (in-range pt endpt)]
+                   (concat p [pt])))
           )))))
 
 #! ==========================================================
 
 (defn euler-015
-  [endpt]
-  ;(printf "%s routes found." (time (dfs endpt)))
-  (printf "%s routes found." (time (bfs endpt)))
-  )
+  []
+  (time
+   (let [endpt (struct pair 2 2)]
+  ;(printf "%s routes found." (dfs endpt)))
+   (printf "%s routes found." (bfs endpt)))
+  ))
 
+
+(deftest test-bfs
+  (is (= (bfs (struct pair 2 2)) 6)))
