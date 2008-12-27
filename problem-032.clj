@@ -53,7 +53,7 @@
    (let [numbers (filter #(not (nil? %))
                          (for [x (range 10000)]
                            (first (pandigital-mmp? x))))]
-     (apply + (for [n nums]
+     (apply + (for [n numbers]
                 (last n))))))
 
 
