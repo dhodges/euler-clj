@@ -142,7 +142,9 @@
                   (first-denomination kinds-of-coins))
                kinds-of-coins))))
 
-(time (cc 200 8))
+(defn euler-031
+  []
+  (time (cc 200 8)))
 
 
 
