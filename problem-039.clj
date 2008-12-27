@@ -50,16 +50,32 @@
   (count (triangle-partitions n)))
 
 
+(defn show-partitions
+  [n]
+  (doseq [x (range 12 (inc n) 2)]
+    (let [tp (triangle-partitions x)]
+      (if tp
+        (printf "%s (%s): %s\n" x (count tp) tp)))))
+
+
 (defn euler-039
   []
   (time
-   (loop [n    12
-          count 1]
-     (if (> n 1000)
-       {:count count, :num n}
-       (recur (inc n)
-              (count-partitions n))))))
+   (loop [n        12
+          maxnum   12
+          maxcount  1]
+     (if (>= n 1000)
+       {:count maxcount, :num maxnum}
+       (let [next  (+ n 2)
+             count (count-partitions next)
+             [maxnum maxcount] (if (> count maxcount)
+                                 [next count]
+                                 [maxnum maxcount])]
+         (recur next
+                maxnum
+                maxcount))))))
 
 
 (deftest test-partitions
   (= 11 (count (partitions 12))))
+
