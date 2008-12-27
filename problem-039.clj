@@ -79,3 +79,6 @@
 (deftest test-partitions
   (= 11 (count (partitions 12))))
 
+(deftest test-euler-039
+  (= (euler-039) 840))
+
