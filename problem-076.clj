@@ -6,7 +6,7 @@
   (:use [project_euler.dh_utils])
   (:use [clojure.contrib.test-is]))
 
-;; It is possible to srite five as a sum in exactly six different ways:
+;; It is possible to write five as a sum in exactly six different ways:
 ;;
 ;;         4 + 1
 ;;         3 + 2
