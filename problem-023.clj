@@ -67,6 +67,7 @@
 (deftest test-euler-23
   (is (not (member-of-sequence? (euler-23) [4178875
                                             4178876
+                                            197711987
                                             395437453
                                             395437454
                                             395437479]))))
