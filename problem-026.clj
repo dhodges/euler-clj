@@ -34,10 +34,7 @@
 ; Notes:
 ; apparently the length of the recurring cycle (if any)
 ; will not be larger than the denominator
-; e.g: the size of the recurring cycle in 1/7 (142857) is 6
-; and 6 < 7
-
-; Console.printf
+; e.g: the size of the recurring cycle in 1/7 (142857) is 6, and 6 < 7
 
 (defn find-recurring-cycle
   [n]
@@ -67,10 +64,10 @@
 
 
 (defn find-cycles
-  []
+  [limit]
   (loop [n 2
          cycles []]
-    (if (>= n 1000)
+    (if (>= n limit)
       cycles
       (let [cycle (find-recurring-cycle n)]
         (recur (inc n)
@@ -79,8 +76,8 @@
                  cycles))))))
 
 (defn print-cycles
-  []
-  (let [cycles (find-cycles)
+  [limit]
+  (let [cycles (find-cycles limit)
         comp   (proxy [java.util.Comparator] []
                  (compare [o1 o2]
                           (let [len1 (count (second o1))
@@ -116,3 +113,6 @@
   (is (not (member-of-sequence? (euler-26)
                                [405
                                 810]))))
+
+(deftest test-find-recurring-cycle
+  (is (= (find-recurring-cycle 73) "01369863")))
