@@ -27,3 +27,72 @@
 ;; can exactly one integer sided right angle triangle be formed?
 
 
+(defn triangle-partition?
+  [triple]
+  (let [[a b c] triple]
+    (= (+ (* a a) (* b b))
+       (* c c))))
+
+
+(defn triangle-partitions
+  [n]
+  (filter triangle-partition?
+          (distinct
+           (map sort
+                (let [n2 (inc (/ n 2))]
+                  (for [a (range 1 n2)
+                        b (range a n2)
+                        :when (< a b (- n a b))]
+                    [a b (- n (+ a b))]))))))
+
+
+(defn count-partitions
+  [n]
+  (count (triangle-partitions n)))
+
+
+(defn show-partitions
+  [n]
+  (doseq [x (filter #(not (triangle-multiple? %))
+                    (range 12 (inc n) 2))]
+    (let [tp (triangle-partitions x)]
+      (if tp
+        (printf "%3s (%s): %s\n" x (count tp) tp)))))
+
+(defn single-triangle?
+  "can exactly one integer sided right angle triangle be formed from n?"
+  [n]
+  (= (count-partitions n) 1))
+
+(defn multiple-of-any
+  "is any one of factors a divisor of 'n'?"
+  [n factors]
+  (cond (empty? factors)
+        false
+        (= (rem n (first factors)) 0)
+        true
+        :else
+        (recur n (rest factors))))
+
+
+(defn show-single-partitions
+  [limit]
+  (loop [n 12
+         multiples []]
+    (if (not (multiple-of-any n multiples))
+      (let [tp  (triangle-partitions n)
+            num (count tp)]
+        (if (= num 1)
+          (printf "%3s (%s): %s\n" n num tp))))
+    (recur (+ n 2)
+           (if (> num 1) (conj multiples n) num))))
+          
+        
+(deftest test-single-triangle
+  (and (= (single-triangle? 182) true)
+       (= (single-triangle? 120) false)))
+
+(deftest test-multiple-of-any
+  (and (= (multiple-of-any 10 [3 7]) false)
+       (= (multiple-of-any 10 [3 7 5]) true)))
+
