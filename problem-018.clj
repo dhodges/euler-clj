@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user
+(ns dh.euler
   (:use [project_euler.dh_utils])
   (:use [clojure.contrib.test-is]))
 
