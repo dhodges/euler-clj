@@ -75,5 +75,5 @@
                              (nseq (rem remain least)  1))))))))
 
 (deftest test-p
-  (= (p 5) 7))
+  (is (= (p 5) 7)))
 
