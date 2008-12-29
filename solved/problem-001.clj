@@ -21,5 +21,4 @@
                     (range 1000))))
 
 (deftest test-euler-001
-  []
-  (= (euler-001) 233168))
+  (is (= (euler-001) 233168)))

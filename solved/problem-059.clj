@@ -100,7 +100,7 @@
 
 (deftest test-euler-059
   []
-  (= (euler-059) 107359))
+  (is (= (euler-059) 107359)))
 
    
    

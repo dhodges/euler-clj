@@ -47,7 +47,3 @@
     (* x y)
     ))
 
-(deftest euler-004
-  []
-  (find-largest-pair) 906609)
-

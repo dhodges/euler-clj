@@ -30,4 +30,4 @@
 
 (deftest test-euler-020
   []
-  (= (solution) 648))
+  (is (= (solution) 648)))

@@ -78,5 +78,5 @@
 
 
 (deftest test-euler-40
-  (= (solution) 210))
+  (is (= (solution) 210)))
 

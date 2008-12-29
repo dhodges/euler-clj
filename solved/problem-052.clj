@@ -40,4 +40,4 @@
 
 (deftest test-euler-52
   []
-  (= (solution) 142857))
+  (is (= (solution) 142857)))

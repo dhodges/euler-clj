@@ -81,5 +81,5 @@
           
 (deftest test-euler-019
   []
-  (= (solution) 171))
+  (is (= (solution) 171)))
 

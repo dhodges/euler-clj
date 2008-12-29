@@ -94,7 +94,7 @@
 
 
 (deftest test-euler-58
-  (= (euler-58) 26241))
+  (is (= (euler-58) 26241)))
 
 
 (deftest test-nw

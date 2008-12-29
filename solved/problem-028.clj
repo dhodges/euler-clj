@@ -62,6 +62,6 @@
 
 (deftest test-euler-028
   []
-  (= (solution 1001) 669171001))
+  (is (= (solution 1001) 669171001)))
 
 

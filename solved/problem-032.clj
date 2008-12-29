@@ -63,5 +63,5 @@
 
 
 (deftest test-euler-32
-  (= (euler-32) 45228))
+  (is (= (euler-32) 45228)))
 

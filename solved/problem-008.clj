@@ -47,4 +47,4 @@
 
 (deftest test-euler-008
   []
-  (= (euler-008) 40824))
+  (is (= (euler-008) 40824)))

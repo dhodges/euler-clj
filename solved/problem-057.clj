@@ -67,5 +67,5 @@
 
 (deftest test-euler-57
   []
-  (= (solution) 153))
+  (is (= (solution) 153)))
 

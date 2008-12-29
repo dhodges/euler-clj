@@ -60,4 +60,4 @@
 
 (deftest test-euler-42
   []
-  (= (solution) 162))
+  (is (= (solution) 162)))

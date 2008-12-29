@@ -98,4 +98,4 @@
 
 (deftest test-euler-033
   []
-  (= 100 (solution)))
+  (is (= 100 (solution))))

@@ -149,10 +149,10 @@
 
 
 (deftest test-generate-coin-partitions
-  (= (count-coin-partitions 50) 441))
+  (is (= (count-coin-partitions 50) 441)))
 
 (deftest test-generate-partitions
-  (= (count-partitions 10) 33))
+  (is (= (count-partitions 10) 33)))
 
 (deftest test-count-coin-partitions
   (is (not (member-of-sequence?
@@ -161,4 +161,4 @@
              73653]))))
 
 (deftest euler-031
-  (= (euler-031) 73682))
+  (is (= (euler-031) 73682)))

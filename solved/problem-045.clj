@@ -64,5 +64,5 @@
 
 (deftest test-euler-45
   []
-  (= (solution) 1533776805))
+  (is (= (solution) 1533776805)))
 

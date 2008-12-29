@@ -67,4 +67,4 @@
 
 (deftest test-euler-017
   []
-  (= (solution) 21124))
+  (is (= (solution) 21124)))

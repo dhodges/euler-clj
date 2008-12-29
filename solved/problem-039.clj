@@ -77,8 +77,8 @@
 
 
 (deftest test-partitions
-  (= 11 (count (partitions 12))))
+  (is (= 11 (count (partitions 12)))))
 
 (deftest test-euler-039
-  (= (euler-039) 840))
+  (is (= (euler-039) 840)))
 

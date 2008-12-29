@@ -60,6 +60,6 @@
 
 (deftest test-euler-007
   []
-  (= (euler-007) 104743))
+  (is (= (euler-007) 104743)))
 
 

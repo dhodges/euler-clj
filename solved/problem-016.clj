@@ -37,4 +37,4 @@
 
 (deftest test-euler-016
   []
-  (= (solution) 1366))
+  (is (= (solution) 1366)))

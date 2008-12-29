@@ -28,4 +28,4 @@
 
 (deftest test-euler-48
   []
-  (= (solution) 9110846700))
+  (is (= (solution) 9110846700)))

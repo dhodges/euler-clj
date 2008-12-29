@@ -220,6 +220,6 @@
 
 (deftest test-euler-013
   []
-  (= (solution) 5537376230))
+  (is (= (solution) 5537376230)))
 
 

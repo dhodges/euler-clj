@@ -26,5 +26,4 @@
                         even-fibs)))
   
 (deftest test-euler-002
-  []
-  (= (euler-002) 4613732))
+  (is (= (euler-002) 4613732)))
