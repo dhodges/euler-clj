@@ -53,7 +53,7 @@
                               (recur (conj partitions partition)))))))
 
 (defn p
-  "Counts each partition generated."
+  "Counts each partition generated - faster than (count (generate-partitions _))"
   [n]
   (loop [count     1
          partition [n]]
@@ -73,6 +73,15 @@
                      (concat part 
                              (nseq (quot remain least) least)
                              (nseq (rem remain least)  1))))))))
+
+(defn print-growth-of-p
+  []
+  (let [xs    (for [x (range 1 52)] (p x))
+        steps (for [x (range 50)] (- (nth xs (inc x))
+                                     (nth xs x)))]
+    (doseq [x (range 50)]
+      (printf "%2s-%2s: %5s\n" x (inc x) (nth steps x)))))
+    
 
 (deftest test-p
   (is (= (p 5) 7)))
