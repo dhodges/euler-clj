@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user
+(ns dh.euler
   (:use [clojure.contrib.test-is]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=5
@@ -45,6 +45,5 @@
          (recur (inc x)))))))
 
 (deftest test-euler-005
-  []
   (is (= (euler-005) 232792560)))
 

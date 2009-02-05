@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user
+(ns dh.euler
   (:use [clojure.contrib.test-is])
   (:import [java.lang.Math]))
 
@@ -18,7 +18,7 @@
 
 
 ;; =======================================================
-;; First solution uses a functional approach which prompty overflows the stack
+;; First solution uses a functional approach which promptly overflows the stack
 ;;   :(
 
 (defn is-a-factor?

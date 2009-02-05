@@ -2,7 +2,7 @@
              exec clj clojure.lang.Script "$0" -- "$@"
              ]
 
-(ns user
+(ns dh.euler
   (:use [clojure.contrib.test-is]))
 	
 ; Add all the natural numbers below one thousand that are multiples of 3 or 5.
