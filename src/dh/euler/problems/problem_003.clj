@@ -1,15 +1,16 @@
-(ns dh.euler.problem_003
-  (:import [java.lang.Math]))
-
 ;; The prime factors of 13195 are 5, 7, 13 and 29.
 ;;
 ;; What is the largest prime factor of the number 600851475143 ?
+;;
+;; http://projecteuler.net/problem=3
+;;
+;; Answer: 6857
 
-;; http://projecteuler.net/index.php?section=problems&id=3
+(ns dh.euler.problems.problem_003
+  (:use [dh.euler.utils.core :refer :all])
+  (:use [dh.euler.utils.primes :refer :all])
+)
 
-;; http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes#Algorithm_details_and_complexity
-;; primes = sieve [2..]
-;; sieve (p : xs) = p : sieve [x | x <− xs, x ‘mod‘ p > 0]
 
 
 ;; =======================================================
@@ -172,4 +173,3 @@
         (recur n
                last-factor
                (+ 2 factor))))))
-
