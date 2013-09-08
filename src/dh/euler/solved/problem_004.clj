@@ -1,17 +1,15 @@
-(ns dh.euler.problems.problem_004)
-
-;; http://projecteuler.net/index.php?section=problems&id=4
-;;
 ;; A palindromic number reads the same both ways. The largest palindrome
 ;; made from the product of two 2-digit numbers is 9009 = 91 x  99.
 ;;
 ;; Find the largest palindrome made from the product of two 3-digit numbers.
+;;
+;; http://projecteuler.net/problem=4
+;;
+;; Answer: 906609
 
+(ns dh.euler.solved.problem_004
+  (:use [dh.euler.util.string :refer [palindrome?]]))
 
-(defn palindrome?
-  [x]
-  (let [s (str x)]
-    (= (seq s) (reverse s))))
 
 ; brute force
 
@@ -38,7 +36,9 @@
         pair  (last pairs)
         x (first pair)
         y (second pair)]
-    (println (format "%s * %s = %s" x y (* x y)))
     (* x y)
     ))
 
+(defn euler-004
+  []
+  (find-largest-pair))

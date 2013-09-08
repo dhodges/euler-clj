@@ -15,5 +15,6 @@
             (strcontains? nstr (char (+ 48 i))))))
 
 (defn palindrome?
-  [s]
-  (= s (apply str (reverse s))))
+  [x]
+  (let [s (str x)]
+    (= (seq s) (reverse s))))
