@@ -8,11 +8,6 @@
 ;; What is the smallest number that is evenly divisible by all of the numbers from 1 to 20?
 
 
-(defn is-a-factor?
-  [x y]
-  (= java.lang.Integer (class (/ x y))))
-
-
 (defn not-a-factor?
   [x y]
   (not (is-a-factor? x y)))

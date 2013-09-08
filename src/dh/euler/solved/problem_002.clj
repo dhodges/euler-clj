@@ -11,10 +11,10 @@
 ;; Answer: 4613732
 
 (ns dh.euler.solved.problem_002
-  (:use [dh.euler.util.core :refer [fibs]]))
+  (:use [dh.euler.util.core :refer [fibonacci]]))
 
 
-(def even-fibs (filter even? fibs))
+(def even-fibs (filter even? fibonacci))
 
 (defn euler-002
   []

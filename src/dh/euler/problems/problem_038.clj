@@ -32,7 +32,7 @@
     (cond (not (= catprod (apply str (distinct catprod))))
           false
           (and (= (count catprod) 9)
-               (pandigital? catprod))
+               (str-pandigital? catprod))
           [number (Long/parseLong catprod)]
           :else
           (recur (inc n)

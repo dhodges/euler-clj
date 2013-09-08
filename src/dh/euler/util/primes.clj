@@ -40,7 +40,7 @@
 
 (defn ldf
   [k n]
-  (cond (divides? n k)
+  (cond (divisible-by? n k)
         k
         (> (pow k 2) n)
         n

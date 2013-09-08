@@ -9,19 +9,12 @@
 ;;
 ;; Find the sum of the digits in the number 100!
 
-(defn fib
-  [n]
-  (if (= n 1)
-    1
-    (* n (fib (dec n)))))
-
-
 (defn euler-020
   []
   (time
    (apply +
           (map #(- (int %) 48)
-               (str (fib 100))))))
+               (str (nth-fibonacci 100))))))
 
 (deftest test-euler-020
   []
