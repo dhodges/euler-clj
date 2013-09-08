@@ -6,8 +6,8 @@
 ;
 ; https://groups.google.com/forum/#!topic/clojure/c1pIXjhcbrc
 
-(ns dh.euler.utils.primes
-  (:use [dh.euler.utils.core :refer :all]))
+(ns dh.euler.util.primes
+  (:use [dh.euler.util.core :refer :all]))
 
 ; -----------------------------------------------------
 ; Respectfully copied from the old, monolithic, clojure-contrib lib

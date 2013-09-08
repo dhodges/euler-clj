@@ -1,4 +1,4 @@
-(ns dh.euler.utils.core)
+(ns dh.euler.util.core)
 
 (defn pow
   [a b]

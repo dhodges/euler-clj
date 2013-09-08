@@ -7,7 +7,7 @@
 ;; Answer: 6857
 
 (ns dh.euler.solved.problem_003
-  (:use [dh.euler.utils.primes :refer [prime-factors]]))
+  (:use [dh.euler.util.primes :refer [prime-factors]]))
 
 
 (defn largest-prime-factor-of
