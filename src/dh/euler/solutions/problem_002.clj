@@ -10,7 +10,7 @@
 ;;
 ;; Answer: 4613732
 
-(ns dh.euler.solved.problem_002
+(ns dh.euler.solutions.problem_002
   (:use [dh.euler.util.core :refer [fibonacci]]))
 
 

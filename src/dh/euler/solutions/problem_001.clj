@@ -7,7 +7,7 @@
 ;;
 ;; Answer: 233168
 
-(ns dh.euler.solved.problem_001)
+(ns dh.euler.solutions.problem_001)
 
 (defn multiple-of
   [x y]

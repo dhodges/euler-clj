@@ -6,7 +6,7 @@
 ;;
 ;; Answer: 6857
 
-(ns dh.euler.solved.problem_003
+(ns dh.euler.solutions.problem_003
   (:use [dh.euler.util.primes :refer [prime-factors]]))
 
 

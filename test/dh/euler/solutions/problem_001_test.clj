@@ -1,5 +1,5 @@
-(ns dh.euler.solved.problem_001_test
-  (:require [dh.euler.solved.problem_001 :refer :all]
+(ns dh.euler.solutions.problem_001_test
+  (:require [dh.euler.solutions.problem_001 :refer :all]
             [clojure.test :refer :all]))
 
 

@@ -7,7 +7,7 @@
 ;;
 ;; Answer: 906609
 
-(ns dh.euler.solved.problem_004
+(ns dh.euler.solutions.problem_004
   (:use [dh.euler.util.string :refer [palindrome?]]))
 
 
