@@ -1,5 +1,3 @@
-(ns dh.euler.problems.problem_006)
-
 ;; http://projecteuler.net/index.php?section=problems&id=6
 ;;
 ;; The sum of the squares of the first ten natural numbers is,
@@ -8,11 +6,13 @@
 ;; The square of the sum of the first ten natural numbers is,
 ;; (1 + 2 + ... + 10)² = 55² = 3025
 ;;
-;; Hence the difference between the sum of the squares of the first ten natural numbers
-;; and the square of the sum is 3025 - 385 = 2640.
+;; Hence the difference between the sum of the squares of the
+;; first ten natural numbers and the square of the sum is 3025 - 385 = 2640.
 ;;
-;; Find the difference between the sum of the squares of the first one hundred natural numbers
-;; and the square of the sum.
+;; Find the difference between the sum of the squares of the
+;; first one hundred natural numbers and the square of the sum.
+
+(ns dh.euler.solutions.problem_006)
 
 (defn sum-of-squares
   [n]
@@ -34,12 +34,6 @@
 
 (defn euler-006
   []
-  (time
    (let [squares (square-of-sums 100)
          sums    (sum-of-squares 100)]
-     (- squares sums))))
-
-(deftest test-euler-006
-  (is (= (euler-006) 25164150)))
-
-
+     (- squares sums)))
