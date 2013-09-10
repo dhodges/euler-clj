@@ -31,7 +31,7 @@
 (defn euler-005
   []
   (let [divisors (range 1 20)]
-    (loop [x 20]
+    (loop [x 2520]
       (if (evenly-divisible-by-all? x divisors)
         x
-        (recur (inc x))))))
+        (recur (+ x 2520))))))
