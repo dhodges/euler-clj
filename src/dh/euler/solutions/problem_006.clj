@@ -11,6 +11,8 @@
 ;;
 ;; Find the difference between the sum of the squares of the
 ;; first one hundred natural numbers and the square of the sum.
+;;
+;; Answer: 25164150
 
 (ns dh.euler.solutions.problem_006)
 
@@ -23,9 +25,7 @@
 
 (defn sums-of
   [n]
-  (if (= n 1)
-    1
-    (+ n (sums-of (dec n)))))
+  (reduce + (range (inc n))))
 
 (defn square-of-sums
   [n]
