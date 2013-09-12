@@ -1,6 +1,3 @@
-(ns dh.euler.problems.problem_011)
-
-
 ;; http://projecteuler.net/index.php?section=problems&id=11
 ;;
 ;; In the 2020 grid below, four numbers along a diagonal line have been marked in red.
@@ -29,6 +26,10 @@
 ;; The product of these numbers is 26 63 78 14 = 1788696.
 
 ;; What is the greatest product of four adjacent numbers in any direction (up, down, left, right, or diagonally) in the 2020 grid?
+
+(ns dh.euler.problems.problem_011)
+
+
 
 (def grid
      '(( 8  2 22 97 38 15 0  40  0 75  4  5  7 78 52 12 50 77 91  8)
@@ -134,5 +135,3 @@
 
 (deftest test-euler-011
   (is (= (solution) 70600674)))
-
-

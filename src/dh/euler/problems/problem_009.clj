@@ -60,12 +60,11 @@
         c (+ b 1)]
     [a b c]))
 
-(defn stifel-sequence
-  []
-  (lazy-seq
-   (let [n 1]
-     (cons (nth-stifel n)
-           (recur (inc n))))))
+;; (def stifel-sequence
+;;   (lazy-seq
+;;    (loop [n 1]
+;;      (cons (nth-stifel n)
+;;            (recur (inc n))))))
 
 ;; (take-while #(<= 1000 (reduce + %)) stifel-sequence)
 
@@ -75,9 +74,10 @@
   (loop [n 1]
     (let [[a b c] (nth-stifel n)
           sum     (+ a b c)]
+      (println (format "%3d: %s = %4d" n [a b c] sum))
       (cond
        (= 1000 sum) [a b c]
-       (> 1000 sum) nil
+       (< 1000 sum) nil
        :else
        (recur (inc n))))))
 
