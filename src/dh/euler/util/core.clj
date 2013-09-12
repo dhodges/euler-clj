@@ -71,8 +71,10 @@
                              factors))))]
     (sort (distinct (conj factors 1)))))
 
+(defn factorise
+  [n]
+  (factors-of n))
 
 (defn highest-factor
   [n]
   (reduce max (factors-of n)))
-
