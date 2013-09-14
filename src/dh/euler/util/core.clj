@@ -2,7 +2,7 @@
 
 (defn pow
   [a b]
-  (reduce * (for [n (range b)] a)))
+  (reduce *' (for [n (range b)] a)))
 
 (defn divisible-by?
   "is n divisible by d?"
@@ -18,7 +18,7 @@
 ; taken from: http://blog.n01se.net/?p=33
 
 (def fibonacci
-  (lazy-cat [1 1] (map + fibonacci (rest fibonacci))))
+  (lazy-cat [1 1] (map +' fibonacci (rest fibonacci))))
 
 (defn nth-fibonacci
   [n]
@@ -31,7 +31,7 @@
         (= n 1)
         1
         :else
-        (* n (factorial (dec n)))))
+        (*' n (factorial (dec n)))))
 
 (defn fac
   [n]
