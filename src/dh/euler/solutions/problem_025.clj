@@ -1,10 +1,3 @@
-(ns dh.euler.problems.problem_025)
-
-;; http://projecteuler.net/index.php?section=problems&id=25
-;;
-;; Problem 25
-;; 30 August 2002
-;;
 ;; The Fibonacci sequence is defined by the recurrence relation:
 ;;
 ;;     F(n) = F(n−1) + F(n−2), where F(1) = 1 and F(2) = 1.
@@ -27,19 +20,20 @@
 ;; The 12th term, F(12), is the first term to contain three digits.
 ;;
 ;; What is the first term in the Fibonacci sequence to contain 1000 digits?
+;;
+;; http://projecteuler.net/problem=25
+;;
+;; Answer: 4782
 
-(def fibs (lazy-cat [0 1] (map + fibs (rest fibs))))
+(ns dh.euler.solutions.problem_025
+  (:use [dh.euler.util.core :refer [fibonacci]]))
 
-(defn solution
+(defn find-term
+  [[term & rest] n]
+  (if (= (count (str term)) 1000)
+    n
+    (recur rest (inc n))))
+
+(defn euler-025
   []
-  (time
-   (loop [n 0]
-     (if (< (count (str (nth fibs n))) 1000)
-       (recur (inc n))
-       n))))
-
-(defn test-solution
-  []
-  (= 4782 (solution)))
-
-
+  (find-term fibonacci 1))
