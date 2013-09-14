@@ -1,11 +1,5 @@
-(ns dh.euler.problems.problem_019)
-
-;; http://projecteuler.net/index.php?section=problems
-;;
-;; Problem 19
-;; 14 June 2002
-;;
-;; You are given the following information, but you may prefer to do some research for yourself.
+;; You are given the following information, but you may prefer to do
+;; some research for yourself.
 ;;
 ;;     * 1 Jan 1900 was a Monday.
 ;;     * Thirty days has September,
@@ -19,26 +13,20 @@
 ;;
 ;; How many Sundays fell on the first of the month during the twentieth century
 ;; (1 Jan 1901 to 31 Dec 2000)?
+;;
+;; http://projecteuler.net/problem=19
+
+(ns dh.euler.solutions.problem_019
+  (:use [dh.euler.util.core :refer [divisible-by?]]))
+
 
 (defstruct date :dow :dom :month :year)
 
-(defn divisible?
-  "is 'a' (evenly) divisible by 'b'?"
-  [a b]
-  (= 0 (rem a b)))
-
-(defn mod
-  "modulus"
-  [a b]
-  (if (<= a b)
-    a
-    (rem a b)))
-
 (defn leap-year?
   [y]
-  (if (divisible? y 100)
-    (divisible? y 400)
-    (divisible? y 4)))
+  (if (divisible-by? y 100)
+    (divisible-by? y 400)
+    (divisible-by? y 4)))
 
 (def month-days
      {1 31, 3 31, 4 30, 5 31, 6 30, 7 31, 8 31, 9 30, 10 31, 11 30, 12 31})
@@ -63,18 +51,11 @@
 
 (defn euler-019
   []
-  (time
-   (with-local-vars [count 0]
-     (loop [date (struct date 2 1 1 1901)]
-       (if (> (date :year) 2000)
-         (var-get count)
-         (do
-           (if (= 0 (date :dow))
-             (var-set count (inc (var-get count))))
-           (recur (next-month date))))))))
-
-
-(deftest test-euler-019
-  []
-  (is (= (solution) 171)))
-
+  (loop [date (struct date 2 1 1 1901)
+         count-of-sundays 0]
+    (if (> (date :year) 2000)
+      count-of-sundays
+      (let [next-date (next-month date)]
+        (if (= 0 (date :dow))
+        (recur next-date (inc count-of-sundays))
+        (recur next-date count-of-sundays))))))
