@@ -1,8 +1,3 @@
-(ns dh.euler.problems.problem_017)
-
-;; Problem 17
-;; 17 May 2002
-;;
 ;; If the numbers 1 to 5 are written out in words: one, two, three, four, five,
 ;; then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
 ;;
@@ -13,6 +8,10 @@
 ;; contains 23 letters and 115 (one hundred and fifteen) contains 20 letters.
 ;;
 ;; The use of "and" when writing out numbers is in compliance with British usage.
+;;
+;; http://projecteuler.net/problem=16
+
+(ns dh.euler.solutions.problem_017)
 
 (def wordmap
      {1 "one", 2 "two", 3 "three", 4 "four", 5 "five",
@@ -52,14 +51,9 @@
 
 (defn euler-017
   []
-  (let [lettercount (ref 0)]
-    (dosync
-     (doseq [i (range 1 1001)]
-       (ref-set lettercount
-                (+ @lettercount (count (written-number i))))))
-    (printf "result => %d\n" @lettercount)))
-
-
-(deftest test-euler-017
-  []
-  (is (= (solution) 21124)))
+  (loop [n 1
+         lettercount 0]
+    (if (> n 1000)
+      lettercount
+      (recur (inc n)
+             (+ lettercount (count (written-number n)))))))
