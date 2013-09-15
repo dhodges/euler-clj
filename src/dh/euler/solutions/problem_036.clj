@@ -1,10 +1,3 @@
-(ns dh.euler.problems.problem_036)
-
-;; http://projecteuler.net/index.php?section=problems
-;;
-;; Problem 36
-;; 31 January 2003
-;;
 ;; The decimal number, 585 = 1001001001 (binary),
 ;; is palindromic in both bases.
 ;;
@@ -13,11 +6,13 @@
 ;;
 ;; (Please note that the palindromic number, in either base,
 ;; may not include leading zeros.)
+;;
+;; http://projecteuler.net/problem=36
+;;
+;; Answer: 872187
 
-
-(defn palindrome?
-  [s]
-  (= s (apply str (reverse s))))
+(ns dh.euler.solutions.problem_036
+  (:use [dh.euler.util.string :refer [palindrome?]]))
 
 
 (defn palindromic-both?
@@ -28,11 +23,5 @@
 
 (defn euler-036
   []
-  (time
-   (apply + (for [n (range 1000000)
-                  :when (palindromic-both? n)] n))))
-
-
-(deftest test-euler-036
-  []
-  (is (= (solution) 872187)))
+  (apply + (for [n (range 1000000) :when (palindromic-both? n)]
+             n)))
