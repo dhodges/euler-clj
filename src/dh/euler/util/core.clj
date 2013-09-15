@@ -4,11 +4,6 @@
   [a b]
   (reduce *' (for [n (range b)] a)))
 
-(defn divisible-by?
-  "is n divisible by d?"
-  [n d]
-  (= (rem n d) 0))
-
 (defn squint
   "integer square root"
   [n]
@@ -50,6 +45,11 @@
         false
         :else
         (recur item (rest coll))))
+
+(defn divisible-by?
+  "is n divisible by d?"
+  [n d]
+  (= (rem n d) 0))
 
 (defn is-a-factor?
   [n d]
