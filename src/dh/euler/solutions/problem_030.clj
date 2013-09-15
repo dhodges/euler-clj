@@ -1,7 +1,3 @@
-(ns dh.euler.problems.problem_030)
-
-;; http://projecteuler.net/index.php?section=problems&id=30
-;;
 ;; Surprisingly there are only three numbers that can be written as
 ;; the sum of fourth powers of their digits:
 ;;
@@ -15,6 +11,12 @@
 ;;
 ;; Find the sum of all the numbers that can be written as the sum of
 ;; fifth powers of their digits.
+;;
+;; http://projecteuler.net/problem=30
+;;
+;; Answer: 443839
+
+(ns dh.euler.solutions.problem_030)
 
 
 ; Notes
@@ -42,13 +44,6 @@
 
 (defn euler-030
   []
-  (time
-   (apply +
-          (filter #(armstrong? % 5)
-                  (range (maximum-armstrong-sum 5) 1 -1)))))
-
-(deftest test-euler-030
-  []
-  (is (= (solution) 443839)))
-
-
+  (apply +
+         (filter #(armstrong? % 5)
+                 (range (maximum-armstrong-sum 5) 1 -1))))
