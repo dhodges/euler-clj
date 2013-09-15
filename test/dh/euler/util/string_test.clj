@@ -7,3 +7,7 @@
   (is (= (palindrome? 1000)  false))
   (is (= (palindrome? 52121) false))
   (is (= (palindrome? 52125) true)))
+
+(deftest str-rotate-left-test
+  (is (= (str-rotate-left "abc") "bca"))
+  (is (= (str-rotate-left "abcdefghijk" 4) "efghijkabcd")))
