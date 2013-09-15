@@ -1,5 +1,3 @@
-;; http://projecteuler.net/index.php?section=problems&id=11
-;;
 ;; In the 2020 grid below, four numbers along a diagonal line have been marked in red.
 ;;
 ;;     08 02 22 97 38 15 00 40   00   75   04   05   07 78 52 12 50 77 91 08
@@ -22,13 +20,15 @@
 ;;     20 69 36 41 72 30 23 88   34   62   99   69   82 67 59 85 74 04 36 16
 ;;     20 73 35 29 78 31 90 01   74   31   49   71   48 86 81 16 23 57 05 54
 ;;     01 70 54 71 83 51 54 69   16   92   33   48   61 43 52 01 89 19 67 48
-
+;;
 ;; The product of these numbers is 26 63 78 14 = 1788696.
-
-;; What is the greatest product of four adjacent numbers in any direction (up, down, left, right, or diagonally) in the 2020 grid?
+;;
+;; What is the greatest product of four adjacent numbers in any direction
+;; (up, down, left, right, or diagonally) in the 2020 grid?
+;;
+;; http://projecteuler.net/problem=11
 
 (ns dh.euler.problems.problem_011)
-
 
 
 (def grid
@@ -53,85 +53,64 @@
        (20 73 35 29 78 31 90  1 74 31 49 71 48 86 81 16 23 57  5 54)
        ( 1 70 54 71 83 51 54 69 16 92 33 48 61 43 52  1 89 19 67 48)))
 
+(def nrows    (count grid))
+(def ncolumns (count (first grid)))
 
-(defn item
-  "x and y: 0 - (n-1)"
-  [grid x y]
-  (let [maxX (count (first grid))
-        maxY (count grid)]
-    (if (or (< x 0) (<= maxX x)
-            (< y 0) (<= maxY y))
-      nil
-      (nth (nth grid y) x))))
+(def rows     grid)
 
+(def columns
+  (for [n (range ncolumns)]
+    (map #(nth % n) rows)))
 
-;; (defn split-consecutive-n
-;;   [ns n]
-;;   (if (< (count ns) n)
-;;     '()
-;;     (lazy-cons (take n ns) (split-consecutive-n (rest ns) n))))
-
-
-(defn gp-from-4
-  "greatest product of four consecutive digits"
-  [grid]
-  (reduce max (for [numbers grid]
-                (reduce max (map #(apply * %)
-                                 (partition 4 1 numbers))))))
-
-
-(defn flip
-  "columns <=> rows"
-  [grid]
-  (let [num-columns (count (first grid))]
-    (for [n (range num-columns)]
-      (for [ns grid]
-        (nth ns n)))))
-
+(defn grid-item
+  [x y]
+  (if (or (< x 0) (<= ncolumns x)
+          (< y 0) (<= nrows y))
+    nil
+    (nth (nth grid y) x)))
 
 (defn diagonal
-  "returns a diagonal line of numbers"
-  [grid x xstep y ystep]
-  (loop [x x y y nums '()]
-    (let [n (item grid x y)]
+  "a diagonal line of numbers, down and to the right, from the initial (x,y)"
+  [x y]
+  (loop [x x
+         y y
+         numbers '()]
+    (let [n (grid-item x y)]
       (if (not n)
-        (reverse nums)
-        (recur (+ x xstep) (+ y ystep) (conj nums n))))))
+        (reverse numbers)
+        (recur (inc x) (inc y) (cons n numbers))))))
 
+(def diagonals
+  (concat
+   (for [x (range ncolumns)] (diagonal x 0))
+   (for [y (range 1 nrows)]  (diagonal 0 y))))
 
-(defn diagonal-1
-  [grid]
-  (let [maxX (count (first grid))
-        maxY (count grid)]
+(defn fours-from
+  [row]
+  (if (< (count row) 4)
+    '()
+    (cons (take 4 row)
+          (fours-from (rest row)))))
 
-    (filter #(>= (count %) 4)
-            (concat (for [y (range maxY)]
-                      (diagonal grid 0 1 y 1))
-                    (for [x (range 1 maxX)]
-                      (diagonal grid x 1 0 1))))))
+(defn max-product
+  [row]
+  (reduce max (cons 1 (map #(apply *' %)
+                           (fours-from row)))))
 
+(defn max-product-from
+  [numbers]
+  (reduce max (map max-product numbers)))
 
-(defn diagonal-2
-  [grid]
-  (let [maxX (count (first grid))
-        maxY (count grid)]
+(def max-product-horizontal (max-product-from rows))
+(def max-product-vertical   (max-product-from columns))
+(def max-product-diagonal   (max-product-from diagonals))
 
-    (filter #(>= (count %) 4)
-            (concat (for [y (range maxY)]
-                      (diagonal grid 0 1 y -1))
-                    (for [x (range 1 maxX)]
-                      (diagonal grid x 1 (dec maxY) -1))))))
 
 (defn euler-011
   []
-  (let [mr (partial map reverse)]
-    (reduce max
-            (map gp-from-4
-                 [grid (mr grid)
-                  (flip grid) (mr (flip grid))
-                  (diagonal-1 grid) (mr (diagonal-1 grid))
-                  (diagonal-2 grid) (mr (diagonal-2 grid))
-                  ]))))
+  (reduce max [max-product-horizontal
+               max-product-vertical
+               max-product-diagonal]))
 
-(deftest test-euler-011
-  (is (= (solution) 70600674)))
+;(deftest test-euler-011
+;  (is (= (solution) 70600674)))
