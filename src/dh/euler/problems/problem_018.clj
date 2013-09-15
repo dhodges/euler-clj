@@ -27,7 +27,7 @@
 ;; 04  62  98  27  23  09  70  98  73  93  38  53  60  04  23
 ;;
 ;; NOTE: As there are only 16384 routes, it is possible to solve this problem
-;; by trying every route. However, Problem 67, is the same challenge with
+;; by trying every route. However, Problem 67 is the same challenge with
 ;; a triangle containing one-hundred rows; it cannot be solved by brute force,
 ;; and requires a clever method! ;o)
 ;;
@@ -60,29 +60,71 @@
 (def rowcount (count rows))
 (def maxrow   (dec rowcount))
 
-(defn value-at [x y] (nth (nth rows x) y))
+(defn value-at
+  [row col]
+  (if (or (< row 0)
+          (> row maxrow)
+          (< col 0)
+          (>= col (count (nth rows row))))
+    0
+    (nth (nth rows row) col)))
 
 
 ;; From the cells available
 ;; (left or right in the row below)
 ;; always choose the one with the highest number.
 
+;; (defn top-down
+;;   []
+;;   (loop [row  0
+;;          col  0
+;;          sum (value-at row col)]
+;;     (println (format "%s" [row col]))
+;;     (if (>= row maxrow)
+;;       sum
+;;       (let [row (inc row)
+;;             a   (value-at row col)
+;;             b   (value-at row (inc col))
+;;             col (if (>= a b) col (inc col))]
+;;         (recur row
+;;                col
+;;                (+ sum (max a b)))))))
+
+;; Work upwards from the bottom row
+
+(defn best-choice-above
+  [row col]
+  (let [row (dec row)
+        a   (value-at row (dec col))
+        b   (value-at row col)
+        col (if (> a b) (dec col) col)]
+    [row col]))
+
+
+(defn bottom-up
+  ([row col] (bottom-up row col '()))
+  ([row col values]
+     (if (< row 0)
+       values
+       (let [value  (value-at row col)
+             values (cons value values)
+             [row col] (best-choice-above row col)]
+         (recur row col values)))))
+
+(defn sum-bottom-up
+  [row col]
+  (apply + (bottom-up row col)))
+
+(defn bottom-sums
+  []
+  (let [row 14]
+    (for [col (range (count (nth rows maxrow)))]
+      (sum-bottom-up row col))))
+
+
 (defn euler-018
   []
-  (loop [row  0
-         col  0
-         sum (value-at row col)]
-    (println (format "%s" [row col]))
-    (if (>= row maxrow)
-      sum
-      (let [row (inc row)
-            a   (value-at row col)
-            b   (value-at row (inc col))
-            col (if (>= a b) col (inc col))]
-        (recur row
-               col
-               (+ sum (max a b)))))))
-
+  (apply max (bottom-sums)))
 
 ;; (deftest test-euler-018
 ;;   (= (not (member-of-sequence? (euler-018) [849
