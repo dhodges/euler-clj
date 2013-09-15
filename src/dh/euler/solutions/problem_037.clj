@@ -1,10 +1,3 @@
-(ns dh.euler.problems.problem_037)
-
-;; http://projecteuler.net/index.php?section=problems&id=37
-;;
-;; Problem 37
-;; 14 February 2003
-;;
 ;; The number 3797 has an interesting property. Being prime itself,
 ;; it is possible to continuously remove digits from left to right,
 ;; and remain prime at each stage: 3797, 797, 97, and 7.
@@ -15,35 +8,18 @@
 ;; from left to right and right to left.
 ;;
 ;; NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
+;;
+;; http://projecteuler.net/problem=37
+
+(ns dh.euler.solutions.problem_037
+  (:use [dh.euler.util.core   :refer [factor? factorise]]
+        [dh.euler.util.primes :refer [prime?]]))
+
 
 ; Notes
 ; Truncatable Primes
 ; http://en.wikipedia.org/wiki/Truncatable_prime
 ;
-
-(defn factor?
-  [x y]
-  (= (rem x y) 0))
-
-(defn factorise
-  "return the factors of the given number"
-  [n]
-  (let [squint  (int (Math/floor (Math/sqrt n)))
-        factors (loop [x 1 factors '()]
-                  (if (> x squint)
-                    factors
-                    (recur (inc x)
-                           (if (factor? n x)
-                             (concat [x (/ n x)] factors)
-                             factors))))]
-    (sort (distinct factors))))
-
-(defn prime?
-  [n]
-  (if (and (not (= n 2))
-           (even? n))
-    false
-    (= [1 n] (factorise n))))
 
 (defn left-truncatable-prime?
   [n]
@@ -68,10 +44,5 @@
 
 (defn euler-037
   []
-  (time
-   (apply + (for [n (range 8 (inc *upper-limit*))
-                  :when (truncatable-prime? n)] n))))
-
-(deftest test-euler-037
-  []
-  (is (= (solution) 748317)))
+  (apply + (for [n (range 8 (inc *upper-limit*)) :when (truncatable-prime? n)]
+             n)))
