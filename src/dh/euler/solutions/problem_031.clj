@@ -1,11 +1,3 @@
-(ns dh.euler.problems.problem_031
-  (:use [dh.euler.utils]))
-
-;; http://projecteuler.net/index.php?section=problems&id=31
-;;
-;; Problem 31
-;; 22 November 2002
-
 ;; In England the currency is made up of pound, £, and pence, p,
 ;; and there are eight coins in general circulation:
 ;;
@@ -16,6 +8,11 @@
 ;;     1×£1 + 1×50p + 2×20p + 1×5p + 1×2p + 3×1p
 ;;
 ;; How many different ways can £2 be made using any number of coins?
+;;
+;; http://projecteuler.net/index.php?section=problems&id=31
+
+(ns dh.euler.solutions.problem_031
+  (:use [dh.euler.util.core :refer [member-of-sequence?]]))
 
 
 (def coins [1 2 5 10 20 50 100 200])
@@ -140,20 +137,3 @@
 (defn euler-031
   []
   (time (cc 200 8)))
-
-
-
-(deftest test-generate-coin-partitions
-  (is (= (count-coin-partitions 50) 441)))
-
-(deftest test-generate-partitions
-  (is (= (count-partitions 10) 33)))
-
-(deftest test-count-coin-partitions
-  (is (not (member-of-sequence?
-            (count-coin-partitions 200)
-            [73652
-             73653]))))
-
-(deftest euler-031
-  (is (= (euler-031) 73682)))
