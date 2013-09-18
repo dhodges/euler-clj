@@ -1,8 +1,9 @@
-(ns dh.euler.util.core)
+(ns dh.euler.util.core
+  (:use [clojure.math.numeric-tower :refer [expt]]))
 
 (defn pow
   [a b]
-  (reduce *' (for [n (range b)] a)))
+  (expt a b))
 
 (defn squint
   "integer square root"
