@@ -35,17 +35,25 @@
       (recur (conj line (pascal-diagonal-item row (inc ndx)))
              (inc ndx)))))
 
+
+;; Note that the nth row has n columns
+;;     1
+;;    1 1
+;;   1 2 1
+;;  1 3 3 1
+;; 1 4 6 4 1
+
 ; each row item is determined by:
 ; C(n, k+1) = C(n, k) * (n-k) / (k+1)
 
-(defn pascal-row
+(defn pascal-nth-row
   [n]
   (loop [line [1]
          ndx  0]
-    (if (= ndx n)
+    (if (= n (count line))
       line
       (recur (conj line
                    (/ (* (nth line ndx)
-                         (- n ndx))
-                      (inc ndx)))
+                         (- n (inc ndx)))
+                      (+ ndx 1)))
              (inc ndx)))))
