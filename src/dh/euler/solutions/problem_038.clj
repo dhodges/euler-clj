@@ -1,9 +1,3 @@
-(ns dh.euler.problems.problem_038
-  (:use [dh.euler.utils])
-  (:use [clojure.contrib.trace]))
-
-;; http://projecteuler.net/index.php?section=problems&id=38
-;;
 ;; Problem 38
 ;; 28 February 2003
 ;;
@@ -23,6 +17,14 @@
 ;; What is the largest 1 to 9 pandigital 9-digit number that can be
 ;; formed as the concatenated product of an integer with (1,2, ... , n)
 ;; where n > 1?
+;;
+;; http://projecteuler.net/problem=38
+;;
+;; Answer: 932718654
+
+
+(ns dh.euler.solutions.problem_038
+  (:use [dh.euler.util.string :refer [strcat str-pandigital?]]))
 
 
 (defn catprod-pandigital
@@ -61,13 +63,7 @@
                  (conj pans pan)
                  pans))))))
 
-(defn euler-38
+(defn euler-038
   []
   (time
    (second (first (generate-pandigitals 10000)))))
-
-
-(deftest test-euler-38
-  (is (= (euler-38) 932718654)))
-
-
