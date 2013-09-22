@@ -34,7 +34,7 @@
 ;; http://projecteuler.net/problem=18
 
 
-(ns dh.euler.problems.problem_018)
+(ns dh.euler.solutions.problem_018)
 
 (def text "                 75
                           95  64
@@ -69,64 +69,16 @@
     0
     (nth (nth rows row) col)))
 
-
-;; From the cells available
-;; (left or right in the row below)
-;; always choose the one with the highest number.
-
-;; (defn top-down
-;;   []
-;;   (loop [row  0
-;;          col  0
-;;          sum (value-at row col)]
-;;     (println (format "%s" [row col]))
-;;     (if (>= row maxrow)
-;;       sum
-;;       (let [row (inc row)
-;;             a   (value-at row col)
-;;             b   (value-at row (inc col))
-;;             col (if (>= a b) col (inc col))]
-;;         (recur row
-;;                col
-;;                (+ sum (max a b)))))))
-
-;; Work upwards from the bottom row
-
-(defn best-choice-above
+(defn max-sum-path-from
   [row col]
-  (let [row (dec row)
-        a   (value-at row (dec col))
-        b   (value-at row col)
-        col (if (> a b) (dec col) col)]
-    [row col]))
-
-
-(defn bottom-up
-  ([row col] (bottom-up row col '()))
-  ([row col values]
-     (if (< row 0)
-       values
-       (let [value  (value-at row col)
-             values (cons value values)
-             [row col] (best-choice-above row col)]
-         (recur row col values)))))
-
-(defn sum-bottom-up
-  [row col]
-  (apply + (bottom-up row col)))
-
-(defn bottom-sums
-  []
-  (let [row 14]
-    (for [col (range (count (nth rows maxrow)))]
-      (sum-bottom-up row col))))
+  (let [this-val (value-at row col)
+        next-row (inc row)]
+    (if (= this-val 0)
+      0
+      (apply + [this-val (max (max-sum-path-from next-row col)
+                              (max-sum-path-from next-row (inc col)))]))))
 
 
 (defn euler-018
   []
-  (apply max (bottom-sums)))
-
-;; (deftest test-euler-018
-;;   (= (not (member-of-sequence? (euler-018) [849
-;;                                             1064
-;;                                             1068]))))
+  (max-sum-path-from 0 0))
