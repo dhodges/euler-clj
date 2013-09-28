@@ -7,7 +7,8 @@
 ; https://groups.google.com/forum/#!topic/clojure/c1pIXjhcbrc
 
 (ns dh.euler.util.primes
-  (:use [dh.euler.util.core :refer :all]))
+  (:use [dh.euler.util.core :refer :all]
+        [clojure.math.numeric-tower :refer [abs]]))
 
 ; -----------------------------------------------------
 ; Respectfully copied from the old, monolithic, clojure-contrib lib
@@ -62,14 +63,15 @@
   [n]
   (ldpf primes n))
 
+;; Can negative numbers be prime?
+;; Some say yes, some say no.
+;; Let's allow negative primes and see how we go.
 (defn prime?
   [n]
-  (cond (< n 1)
-        (throw (new Exception "not a positive integer"))
-        (= n 1)
-        false
-        :else
-        (= (ldp n) n)))
+  (let [n (abs n)]
+    (if (= n 1)
+      false
+      (= (ldp n) n))))
 
 ; -----------------------------------------------------
 
