@@ -27,8 +27,10 @@
 ;; (up, down, left, right, or diagonally) in the 2020 grid?
 ;;
 ;; http://projecteuler.net/problem=11
+;;
+;; Answer: 706006741
 
-(ns dh.euler.problems.problem_011)
+(ns dh.euler.solutions.problem_011)
 
 
 (def grid
@@ -69,7 +71,7 @@
     nil
     (nth (nth grid y) x)))
 
-(defn diagonal
+(defn diagonal-right
   "a diagonal line of numbers, down and to the right, from the initial (x,y)"
   [x y]
   (loop [x x
@@ -80,10 +82,26 @@
         (reverse numbers)
         (recur (inc x) (inc y) (cons n numbers))))))
 
-(def diagonals
+(def diagonals-right
   (concat
-   (for [x (range ncolumns)] (diagonal x 0))
-   (for [y (range 1 nrows)]  (diagonal 0 y))))
+   (for [x (range ncolumns)] (diagonal-right x 0))
+   (for [y (range 1 nrows)]  (diagonal-right 0 y))))
+
+(defn diagonal-left
+  "a diagonal line of numbers, down and to the left, from the initial (x,y)"
+  [x y]
+  (loop [x x
+         y y
+         numbers '()]
+    (let [n (grid-item x y)]
+      (if (not n)
+        (reverse numbers)
+        (recur (inc x) (dec y) (cons n numbers))))))
+
+(def diagonals-left
+  (concat
+   (for [x (range ncolumns)] (diagonal-left x 0))
+   (for [y (range 1 nrows)]  (diagonal-left 0 y))))
 
 (defn fours-from
   [row]
@@ -101,16 +119,15 @@
   [numbers]
   (reduce max (map max-product numbers)))
 
-(def max-product-horizontal (max-product-from rows))
-(def max-product-vertical   (max-product-from columns))
-(def max-product-diagonal   (max-product-from diagonals))
+(def max-product-horizontal     (max-product-from rows))
+(def max-product-vertical       (max-product-from columns))
+(def max-product-diagonal-right (max-product-from diagonals-right))
+(def max-product-diagonal-left  (max-product-from diagonals-left))
 
 
 (defn euler-011
   []
   (reduce max [max-product-horizontal
                max-product-vertical
-               max-product-diagonal]))
-
-;(deftest test-euler-011
-;  (is (= (solution) 70600674)))
+               max-product-diagonal-right
+               max-product-diagonal-left]))
