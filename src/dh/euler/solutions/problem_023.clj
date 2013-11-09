@@ -19,11 +19,11 @@
 ;; http://projecteuler.net/problem=23
 
 (ns dh.euler.solutions.problem_023
-  (:use [dh.euler.util.core :refer [factorise]]))
+  (:use [dh.euler.util.core :refer [proper-divisors]]))
 
-(defn perfect?     [n] (= n (apply + (factorise n))))
-(defn deficient?   [n] (> n (apply + (factorise n))))
-(defn abundant?    [n] (< n (apply + (factorise n))))
+(defn perfect?     [n] (= n (apply + (proper-divisors n))))
+(defn deficient?   [n] (> n (apply + (proper-divisors n))))
+(defn abundant?    [n] (< n (apply + (proper-divisors n))))
 (def  abundant?    (memoize abundant?))
 
 (defn sum-of-2-abundants?

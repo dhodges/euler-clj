@@ -14,12 +14,12 @@
 ;; http://projecteuler.net/index.php?section=problems&id=32
 
 (ns dh.euler.solutions.problem_032
-  (:use [dh.euler.util.core   :refer [factorise]]
+  (:use [dh.euler.util.core   :refer [proper-divisors]]
         [dh.euler.util.string :refer [str-pandigital? strcat]]))
 
 (defn divisor-pairs
   [n]
-  (loop [divisors (rest (factorise n))
+  (loop [divisors (rest (proper-divisors n))
          pairs    []]
     (if (empty? divisors)
       pairs

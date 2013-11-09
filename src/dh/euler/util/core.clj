@@ -1,4 +1,5 @@
 (ns dh.euler.util.core
+  (:use [clojure.set :refer [intersection]])
   (:use [clojure.math.numeric-tower :refer [expt]]))
 
 (defn pow
@@ -70,12 +71,28 @@
                            (if (factor? n x)
                              (concat [x (/ n x)] factors)
                              factors))))]
-    (sort (distinct (conj factors 1)))))
+    (sort (distinct (conj factors 1 n)))))
 
 (defn factorise
   [n]
   (factors-of n))
 
-(defn highest-factor
+(defn proper-divisors
+  "all the factors of n (other than n itself)"
   [n]
-  (reduce max (factors-of n)))
+  (let [factors (factorise n)]
+    (take (dec (count factors)) factors)))
+
+(defn highest-factor
+  "highest factor of n (other than n itself)"
+  [n]
+  (let [factors (factors-of n)
+        factors' (take (dec (count factors)) factors)]
+    (reduce max factors')))
+
+(defn gcd
+  "greatest common divisor"
+  [a b]
+  (let [afactors (set (factorise a))
+        bfactors (set (factorise b))]
+    (reduce max (intersection afactors bfactors))))

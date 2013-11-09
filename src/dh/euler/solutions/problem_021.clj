@@ -15,13 +15,12 @@
 
 
 (ns dh.euler.solutions.problem_021
-  (:use [dh.euler.util.core :refer [factorise]]))
-
+  (:use [dh.euler.util.core :refer [proper-divisors]]))
 
 (defn d
   "sum of proper divisors of n"
   [n]
-  (reduce + (factorise n)))
+  (reduce + (proper-divisors n)))
 
 (defn amicable-pair
   [a]
