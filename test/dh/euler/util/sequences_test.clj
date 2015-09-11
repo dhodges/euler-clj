@@ -1,4 +1,4 @@
-(ns dh.euler.util.sequences_test
+(ns dh.euler.util.sequences-test
   (:require [dh.euler.util.sequences :refer :all]
             [clojure.test :refer :all]))
 

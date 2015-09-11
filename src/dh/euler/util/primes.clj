@@ -7,7 +7,7 @@
 ; https://groups.google.com/forum/#!topic/clojure/c1pIXjhcbrc
 
 (ns dh.euler.util.primes
-  (:use [dh.euler.util.core :refer :all]
+  (:use [dh.euler.util.core]
         [clojure.math.numeric-tower :refer [abs]]))
 
 ; -----------------------------------------------------

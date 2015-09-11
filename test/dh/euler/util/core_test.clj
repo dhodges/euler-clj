@@ -1,6 +1,6 @@
-(ns dh.euler.util.core_test
-  (:require [dh.euler.util.core :refer :all]
-            [clojure.test :refer :all]))
+(ns dh.euler.util.core-test
+  (:use [dh.euler.util.core]
+        [clojure.test]))
 
 (deftest pow-test
   (is (= (pow 2 3)   8))

@@ -1,4 +1,4 @@
-(ns dh.euler.util.string_test
+(ns dh.euler.util.string-test
   (:require [dh.euler.util.string :refer :all]
             [clojure.test :refer :all]))
 
