@@ -16,7 +16,7 @@
 ; see: http://en.wikipedia.org/wiki/Factorion
 
 
-(def *upper-bound* (* (factorial 9) 7))
+(def upper-bound (* (factorial 9) 7))
 
 
 (defn facsum
@@ -28,6 +28,6 @@
 
 (defn euler-034
   []
-  (apply + (for [n (range 3 (inc *upper-bound*))
+  (apply + (for [n (range 3 (inc upper-bound))
                   :when (= n (facsum n))]
              n)))

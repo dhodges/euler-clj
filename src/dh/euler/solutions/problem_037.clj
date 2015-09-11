@@ -40,9 +40,10 @@
   (and (right-truncatable-prime? n)
        (left-truncatable-prime?  n)))
 
-(def *upper-limit* 739397)
+(def upper-limit 739397)
 
 (defn euler-037
   []
-  (apply + (for [n (range 8 (inc *upper-limit*)) :when (truncatable-prime? n)]
+  (apply + (for [n (range 8 (inc upper-limit))
+                 :when (truncatable-prime? n)]
              n)))
