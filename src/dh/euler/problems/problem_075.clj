@@ -1,5 +1,4 @@
-(ns dh.euler.problems.problem_075
-  (:use [dh.euler.utils]))
+(ns dh.euler.problems.problem_075)
 
 ;; It turns out that 12cm is the smallest length of wire that can be bent to form an
 ;; integer sided right angle triangle in exactly one way, but there are many more examples.
@@ -22,42 +21,50 @@
 ;; can exactly one integer sided right angle triangle be formed?
 
 
+(defn square [n]
+  (* n n))
+
 (defn triangle-partition?
   [triple]
   (let [[a b c] triple]
-    (= (+ (* a a) (* b b))
-       (* c c))))
+    (= (+ (square a)
+          (square b))
+       (square c))))
 
-
-(defn triangle-partitions
+(defn partition-into-threes
   [n]
-  (filter triangle-partition?
-          (distinct
-           (map sort
-                (let [n2 (inc (/ n 2))]
-                  (for [a (range 1 n2)
-                        b (range a n2)
-                        :when (< a b (- n a b))]
-                    [a b (- n (+ a b))]))))))
+  (distinct
+   (let [n2 (inc (/ n 2))]
+     (for [a (range 1 n2)
+           b (range a n2)
+           :when (< a b (- n a b))]
+       [a b (- n (+ a b))]))))
 
+(defn make-triangle-partitions
+  [n]
+  (map sort
+       (filter triangle-partition?
+               (partition-into-threes n))))
 
 (defn count-partitions
   [n]
-  (count (triangle-partitions n)))
-
-
-(defn show-partitions
-  [n]
-  (doseq [x (filter #(not (triangle-multiple? %))
-                    (range 12 (inc n) 2))]
-    (let [tp (triangle-partitions x)]
-      (if tp
-        (printf "%3s (%s): %s\n" x (count tp) tp)))))
+  (count (make-triangle-partitions n)))
 
 (defn single-triangle?
   "can exactly one integer sided right angle triangle be formed from n?"
   [n]
   (= (count-partitions n) 1))
+
+(defn euler-075
+  []
+  (loop [n 1
+         count 0]
+    (if (= n 2000000)
+      count
+      (recur (inc n)
+             (if (single-triangle? n)
+               (inc count)
+               (count))))))
 
 (defn multiple-of-any
   "is any one of factors a divisor of 'n'?"
@@ -69,25 +76,4 @@
         :else
         (recur n (rest factors))))
 
-
-(defn show-single-partitions
-  [limit]
-  (loop [n 12
-         multiples []]
-    (if (not (multiple-of-any n multiples))
-      (let [tp  (triangle-partitions n)
-            num (count tp)]
-        (if (= num 1)
-          (printf "%3s (%s): %s\n" n num tp))))
-    (recur (+ n 2)
-           (if (> num 1) (conj multiples n) num))))
-
-
-(deftest test-single-triangle
-  (and (= (single-triangle? 182) true)
-       (= (single-triangle? 120) false)))
-
-(deftest test-multiple-of-any
-  (and (= (multiple-of-any 10 [3 7]) false)
-       (= (multiple-of-any 10 [3 7 5]) true)))
 
