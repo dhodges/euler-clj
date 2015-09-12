@@ -1,6 +1,5 @@
-(ns dh.euler.problems.042
-  (:import [java.io File])
-  (:use [clojure.test :refer [deftest is]]))
+(ns dh.euler.solutions.042
+  (:require [clojure.string :as str]))
 
 ;; http://projecteuler.net/index.php?section=problems&id=42
 ;;
@@ -41,18 +40,12 @@
    (apply + (map #(- (int %) 64) (.toUpperCase w)))))
 
 (def words
-     (sort
-      (.split
-       (apply str (remove #(= % \")
-                          (slurp "words.txt")))
-       ",")))
+  (sort
+   (.split
+    (str/join (remove #(= % \") (slurp "resources/words.txt")))
+    ",")))
 
 (defn euler-042
   []
   (time
    (count (filter triangle-word? words))))
-
-
-(deftest test-euler-42
-  []
-  (is (= (euler-042) 162)))
