@@ -7,7 +7,7 @@
 ;;
 ;; http://projecteuler.net/problem=34
 
-(ns dh.euler.solutions.034
+(ns dh.euler.problems.034
   (:use [dh.euler.util.core :refer [factorial]]))
 
 
@@ -28,6 +28,6 @@
 
 (defn euler-034
   []
-  (apply + (for [n (range 3 (inc upper-bound))
-                  :when (= n (facsum n))]
-             n)))
+  (time (apply + (for [n (range 3 (inc upper-bound))
+                       :when (= n (facsum n))]
+                   n))))

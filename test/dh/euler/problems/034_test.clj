@@ -1,5 +1,5 @@
-(ns dh.euler.solutions.034-test
-  (:use [dh.euler.solutions.034 :refer [euler-034]]
+(ns dh.euler.problems.034-test
+  (:use [dh.euler.problems.034 :refer [euler-034]]
         [clojure.test :refer :all]))
 
 (deftest test-euler-034

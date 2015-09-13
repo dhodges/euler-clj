@@ -13,7 +13,7 @@
 ;;
 ;; http://projecteuler.net/index.php?section=problems&id=32
 
-(ns dh.euler.solutions.032
+(ns dh.euler.problems.032
   (:use [dh.euler.util.core   :refer [proper-divisors]]
         [dh.euler.util.string :refer [str-pandigital? strcat]]))
 
@@ -63,4 +63,4 @@
 
 (defn euler-032
   []
-  (reduce + (generate-valid-products)))
+  (time (reduce + (generate-valid-products))))

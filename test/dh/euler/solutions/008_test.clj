@@ -4,4 +4,4 @@
 
 
 (deftest test-euler-008
-  (is (= (euler-008) 40824)))
+  (is (= (euler-008) 23514624000)))

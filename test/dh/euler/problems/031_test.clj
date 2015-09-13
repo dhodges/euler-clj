@@ -1,5 +1,5 @@
-(ns dh.euler.solutions.031-test
-  (:use [dh.euler.solutions.031 :refer :all]
+(ns dh.euler.problems.031-test
+  (:use [dh.euler.problems.031 :refer :all]
         [dh.euler.util.core :refer :all]
         [clojure.test :refer :all]))
 

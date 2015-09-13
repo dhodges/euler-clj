@@ -23,7 +23,7 @@
 ;;
 ;; http://projecteuler.net/problem=8
 ;;
-;; Answer: 40824
+;; Answer: 40824 (?)
 
 (ns dh.euler.solutions.008)
 
@@ -31,12 +31,12 @@
 
 (defn euler-008
   []
-  (let [str-product
-        (fn [str] (reduce * (map #(Character/getNumericValue %) str)))]
-    (loop [maxp 0
-           str  test-number]
-      (if (< (count str) 5)
-        maxp
-        (recur (max (str-product (take 5 str))
-                    maxp)
-               (drop 1 str))))))
+  (time (let [char-to-int #(Character/getNumericValue %)
+              str-product #(reduce * (map char-to-int %))]
+          (loop [maxp 0
+                 str  test-number]
+            (if (< (count str) 13)
+              maxp
+              (recur (max (str-product (take 13 str))
+                          maxp)
+                     (drop 1 str)))))))

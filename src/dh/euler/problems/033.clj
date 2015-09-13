@@ -13,7 +13,7 @@
 ;;
 ;; http://projecteuler.net/problem=33
 
-(ns dh.euler.solutions.033
+(ns dh.euler.problems.033
   (:use [dh.euler.util.core :refer [gcd]]))
 
 
@@ -53,24 +53,24 @@
 
 (defn euler-033
   []
-  (let [f (fn [[x d n]]
-            (or (= (* 9 d n)
-                   (* x (- (* 10 d) n)))
-                (= (* 9 d n)
-                   (* x (- (* 10 n) d)))))
+  (time (let [f (fn [[x d n]]
+                  (or (= (* 9 d n)
+                         (* x (- (* 10 d) n)))
+                      (= (* 9 d n)
+                         (* x (- (* 10 n) d)))))
 
-        xdns (filter f (for [x (range 1 10)
-                             d (range 1 11)
-                             n (range 1  d)]
-                         [x d n]))
+              xdns (filter f (for [x (range 1 10)
+                                   d (range 1 11)
+                                   n (range 1  d)]
+                               [x d n]))
 
-        ns (map (fn [[x d n]] n) xdns)
-        ds (map (fn [[x d n]] d) xdns)
+              ns (map (fn [[x d n]] n) xdns)
+              ds (map (fn [[x d n]] d) xdns)
 
-        n (reduce * ns)
-        d (reduce * ds)]
+              n (reduce * ns)
+              d (reduce * ds)]
 
-    (assert (= 4 (count ns)))
-    (assert (= 4 (count ds)))
+          (assert (= 4 (count ns)))
+          (assert (= 4 (count ds)))
 
-    (/ d (gcd n d))))
+          (/ d (gcd n d)))))

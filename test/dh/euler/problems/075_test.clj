@@ -1,4 +1,4 @@
-(ns dh.euler.solutions.075-test
+(ns dh.euler.problems.075-test
   (:use [dh.euler.problems.075 :refer [euler-075 single-triangle? multiple-of-any]]
         [clojure.test :refer :all]))
 

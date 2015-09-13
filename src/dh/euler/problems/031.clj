@@ -11,7 +11,7 @@
 ;;
 ;; http://projecteuler.net/index.php?section=problems&id=31
 
-(ns dh.euler.solutions.031
+(ns dh.euler.problems.031
   (:use [dh.euler.util.core :refer [member-of-sequence?]]))
 
 
@@ -136,4 +136,4 @@
 
 (defn euler-031
   []
-  (cc 200 8))
+  (time (cc 200 8)))
