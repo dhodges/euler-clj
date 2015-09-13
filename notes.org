@@ -1,0 +1,4 @@
+
+
+* Search-and-replace within a file
+perl -pi.back -e 's/<PREF>/ABCD/g;' inputfile
