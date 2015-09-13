@@ -26,13 +26,11 @@
 (defn partitions
   [n]
   (distinct
-   (map sort
-        (let [n2 (inc (/ n 2))]
-          (for [a (range 1 n2)
-                b (range a n2)
-                :when (< a b (- n a b))]
-            [a b (- n (+ a b))])))))
-
+   (let [n2 (inc (/ n 2))]
+     (for [a (range 1 n2)
+           b (range a n2)
+           :when (< a b (- n a b))]
+       [a b (- n (+ a b))]))))
 
 (defn triangle-partitions
   [n]
@@ -40,34 +38,25 @@
           (partitions n)))
 
 
-(defn count-partitions
+(defn count-triangle-partitions
   [n]
   (count (triangle-partitions n)))
-
-
-(defn show-partitions
-  [n]
-  (doseq [x (range 12 (inc n) 2)]
-    (let [tp (triangle-partitions x)]
-      (if tp
-        (printf "%s (%s): %s\n" x (count tp) tp)))))
 
 
 (defn euler-039
   []
   (time
-   (loop [n        12
-          maxnum   12
+   (loop [n      12
+          maxn   n
           maxcount  1]
      (if (>= n 1000)
-       {:count maxcount, :num maxnum}
-       (let [next  (+ n 2)
-             count (count-partitions next)
-             [maxnum maxcount] (if (> count maxcount)
-                                 [next count]
-                                 [maxnum maxcount])]
-         (recur next
-                maxnum
+       {:count maxcount, :num maxn}
+       (let [count (count-triangle-partitions n)
+             [maxn maxcount] (if (> count maxcount)
+                                 [n count]
+                                 [maxn maxcount])]
+         (recur (+ n 2)
+                maxn
                 maxcount))))))
 
 
@@ -75,4 +64,4 @@
   (is (= 11 (count (partitions 12)))))
 
 (deftest test-euler-039
-  (is (= (euler-039) 840)))
+  (is (=  (:num (euler-039)) 840)))
