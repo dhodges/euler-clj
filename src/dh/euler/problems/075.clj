@@ -67,11 +67,11 @@
 
 (defn euler-075
   []
-  (loop [n 1
-         count 0]
-    (if (= n 2000000)
-      count
-      (recur (inc n)
-             (if (single-triangle? n)
-               (inc count)
-               (count))))))
+  (time (loop [n 1
+               count 0]
+          (if (= n 2000000)
+            count
+            (recur (inc n)
+                   (if (single-triangle? n)
+                     (inc count)
+                     (count)))))))

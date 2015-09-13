@@ -81,4 +81,4 @@
 
 (defn euler-018
   []
-  (max-sum-path-from 0 0))
+  (time (max-sum-path-from 0 0)))

@@ -11,6 +11,6 @@
 
 (defn euler-020
   []
-  (apply +'
-         (map #(- (int %) 48)
-              (str (factorial 100)))))
+  (time (apply +'
+               (map #(- (int %) 48)
+                    (str (factorial 100))))))

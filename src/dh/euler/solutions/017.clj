@@ -51,9 +51,9 @@
 
 (defn euler-017
   []
-  (loop [n 1
-         lettercount 0]
-    (if (> n 1000)
-      lettercount
-      (recur (inc n)
-             (+ lettercount (count (written-number n)))))))
+  (time (loop [n 1
+               lettercount 0]
+          (if (> n 1000)
+            lettercount
+            (recur (inc n)
+                   (+ lettercount (count (written-number n))))))))

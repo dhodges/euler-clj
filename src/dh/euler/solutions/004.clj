@@ -41,4 +41,4 @@
 
 (defn euler-004
   []
-  (find-largest-pair))
+  (time (find-largest-pair)))

@@ -36,4 +36,4 @@
 
 (defn euler-025
   []
-  (find-term fibonacci 1))
+  (time (find-term fibonacci 1)))

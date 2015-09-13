@@ -16,4 +16,4 @@
 
 (defn euler-003
   []
-  (largest-prime-factor-of 600851475143))
+  (time (largest-prime-factor-of 600851475143)))

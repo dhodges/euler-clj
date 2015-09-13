@@ -44,6 +44,6 @@
 
 (defn euler-030
   []
-  (apply +
-         (filter #(armstrong? % 5)
-                 (range (maximum-armstrong-sum 5) 1 -1))))
+  (time (apply +
+               (filter #(armstrong? % 5)
+                       (range (maximum-armstrong-sum 5) 1 -1)))))

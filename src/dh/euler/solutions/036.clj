@@ -23,5 +23,5 @@
 
 (defn euler-036
   []
-  (apply + (for [n (range 1000000) :when (palindromic-both? n)]
-             n)))
+  (time (apply + (for [n (range 1000000) :when (palindromic-both? n)]
+                   n))))

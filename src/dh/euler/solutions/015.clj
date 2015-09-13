@@ -37,4 +37,4 @@
 
 (defn euler-015
   []
-  (number-of-routes 20))
+  (time (number-of-routes 20)))

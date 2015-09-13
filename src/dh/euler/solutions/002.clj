@@ -18,6 +18,5 @@
 
 (defn euler-002
   []
-  (reduce + (take-while #(< % 4000000)
-                        even-fibs)))
-
+  (time (reduce + (take-while #(< % 4000000)
+                              even-fibs))))

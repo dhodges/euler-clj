@@ -32,4 +32,4 @@
 
 (defn euler-021
   []
-  (reduce + (filter amicable-pair (range 10000))))
+  (time (reduce + (filter amicable-pair (range 10000)))))

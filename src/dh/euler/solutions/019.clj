@@ -51,11 +51,11 @@
 
 (defn euler-019
   []
-  (loop [date (struct date 2 1 1 1901)
-         count-of-sundays 0]
-    (if (> (date :year) 2000)
-      count-of-sundays
-      (let [next-date (next-month date)]
-        (if (= 0 (date :dow))
-        (recur next-date (inc count-of-sundays))
-        (recur next-date count-of-sundays))))))
+  (time (loop [date (struct date 2 1 1 1901)
+               count-of-sundays 0]
+          (if (> (date :year) 2000)
+            count-of-sundays
+            (let [next-date (next-month date)]
+              (if (= 0 (date :dow))
+                (recur next-date (inc count-of-sundays))
+                (recur next-date count-of-sundays)))))))

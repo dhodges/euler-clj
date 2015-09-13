@@ -212,4 +212,4 @@
 
 (defn euler-013
   []
-  (reduce #(format "%s%s" %1 %2) (take 10 (str (reduce + numbers)))))
+  (time (reduce #(format "%s%s" %1 %2) (take 10 (str (reduce + numbers))))))

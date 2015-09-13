@@ -16,6 +16,6 @@
 
 (defn euler-001
   []
-  (reduce + (filter #(or (multiple-of % 3)
-                         (multiple-of % 5))
-                    (range 1000))))
+  (time  (reduce + (filter #(or (multiple-of % 3)
+                                (multiple-of % 5))
+                           (range 1000)))))

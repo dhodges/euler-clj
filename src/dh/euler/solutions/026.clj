@@ -47,12 +47,12 @@
 
 (defn euler-026
   []
-  (loop [n 1
-         max_n n
-         max_cycle 0]
-    (if (= n 1000)
-      max_n
-      (let [cycle (recurring-cycle-count n)]
-        (if (> cycle max_cycle)
-          (recur (inc n) n     cycle)
-          (recur (inc n) max_n max_cycle))))))
+  (time (loop [n 1
+               max_n n
+               max_cycle 0]
+          (if (= n 1000)
+            max_n
+            (let [cycle (recurring-cycle-count n)]
+              (if (> cycle max_cycle)
+                (recur (inc n) n     cycle)
+                (recur (inc n) max_n max_cycle)))))))

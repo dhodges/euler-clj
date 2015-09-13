@@ -46,4 +46,4 @@
 
 (defn euler-022
   []
-  (gather-name-score names 1 0))
+  (time (gather-name-score names 1 0)))

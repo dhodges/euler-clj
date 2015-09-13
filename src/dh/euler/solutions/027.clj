@@ -56,19 +56,19 @@
 
 (defn euler-027
   []
-  (loop [a     -999
-         maxa -1000
-         maxb -1000
-         maxnum   0]
-    (let [[num b] (max-consecutive-primes-and-b-for a)]
-      (if (= a 1000)
-        (* maxa maxb)
-        (if (> maxnum num)
-          (recur (inc a)
-                 maxa
-                 maxb
-                 maxnum)
-          (recur (inc a)
-                 a
-                 b
-                 num))))))
+  (time (loop [a     -999
+               maxa -1000
+               maxb -1000
+               maxnum   0]
+          (let [[num b] (max-consecutive-primes-and-b-for a)]
+            (if (= a 1000)
+              (* maxa maxb)
+              (if (> maxnum num)
+                (recur (inc a)
+                       maxa
+                       maxb
+                       maxnum)
+                (recur (inc a)
+                       a
+                       b
+                       num)))))))

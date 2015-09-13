@@ -29,5 +29,5 @@
 
 (defn euler-029
   []
-  (count
-   (distinct-terms 100)))
+  (time (count
+         (distinct-terms 100))))

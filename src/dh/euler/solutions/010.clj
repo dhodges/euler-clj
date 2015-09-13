@@ -12,4 +12,4 @@
 
 (defn euler-010
   []
-  (reduce + (take-while #(> 2000000 %) primes)))
+  (time (reduce + (take-while #(> 2000000 %) primes))))

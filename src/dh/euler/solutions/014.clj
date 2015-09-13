@@ -33,16 +33,16 @@
 
 (defn euler-014
   []
-  (loop [n 0
-         max-chain (struct-map chain :n 13 :len 10)]
-    (if (>= n 1000000)
-      (max-chain :n)
-      (do
-        (let [n (inc n)
-              new-chain (struct-map chain
-                          :n n
-                          :len (count(collatz-chain n)))]
-          (if (> (new-chain :len)
-                 (max-chain :len))
-            (recur n new-chain)
-            (recur n max-chain)))))))
+  (time (loop [n 0
+               max-chain (struct-map chain :n 13 :len 10)]
+          (if (>= n 1000000)
+            (max-chain :n)
+            (do
+              (let [n (inc n)
+                    new-chain (struct-map chain
+                                          :n n
+                                          :len (count(collatz-chain n)))]
+                (if (> (new-chain :len)
+                       (max-chain :len))
+                  (recur n new-chain)
+                  (recur n max-chain))))))))

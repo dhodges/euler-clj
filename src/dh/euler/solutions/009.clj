@@ -39,38 +39,39 @@
      (- 1000 n)))
 
 (defn euler-009
-  ([] (euler-009 1))
+  ([] (time (euler-009 1)))
   ([b]
-     (if (= b 1000)
-       "WTF!"
-       (let [a (solve-for b)
-             c (- 1000 a b)]
-         (if (= a (floor a))
-           (* a b c)
-           (recur (inc b)))))))
+   (if (= b 1000)
+            "WTF!"
+            (let [a (solve-for b)
+                  c (- 1000 a b)]
+              (if (= a (floor a))
+                (* a b c)
+                (recur (inc b))))))
 
-;; =====================================
+  ;; =====================================
 
-;; http://en.wikipedia.org/wiki/Pythagorean_triple
-;; http://en.wikipedia.org/wiki/Formulas_for_generating_Pythagorean_triples
+  ;; http://en.wikipedia.org/wiki/Pythagorean_triple
+  ;; http://en.wikipedia.org/wiki/Formulas_for_generating_Pythagorean_triples
 
-;; (defn euclid-triple
-;;   [m n]
-;;   (list  (* 2 m n)
-;;          (- (* m m) (* n n))
-;;          (+ (* m m) (* n n))))
+  ;; (defn euclid-triple
+  ;;   [m n]
+  ;;   (list  (* 2 m n)
+  ;;          (- (* m m) (* n n))
+  ;;          (+ (* m m) (* n n))))
 
-;; (defn natural?
-;;   [n]
-;;   (and (>= n 0)
-;;        (= (class n) java.lang.Integer)))
+  ;; (defn natural?
+  ;;   [n]
+  ;;   (and (>= n 0)
+  ;;        (= (class n) java.lang.Integer)))
 
-;; (defn triple?
-;;   [a b c]
-;;   (and (natural? a)
-;;        (natural? b)
-;;        (natural? c)
-;;        (< a b c)
-;;        (= (+ (* a a)
-;;              (* b b))
-;;           (* c c))))
+  ;; (defn triple?
+  ;;   [a b c]
+  ;;   (and (natural? a)
+  ;;        (natural? b)
+  ;;        (natural? c)
+  ;;        (< a b c)
+  ;;        (= (+ (* a a)
+  ;;              (* b b))
+  ;;           (* c c))))
+  )

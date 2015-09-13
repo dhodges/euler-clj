@@ -21,9 +21,9 @@
 
 (defn euler-56
   []
-  (reduce max (for [n (range 1 101)
-                    e (range 1 101)]
-                (digital_sum (pow n e)))))
+  (time (reduce max (for [n (range 1 101)
+                          e (range 1 101)]
+                      (digital_sum (pow n e))))))
 
 
 (deftest test-euler-56

@@ -12,5 +12,5 @@
 
 (defn euler-016
   []
-  (reduce + (map #(- (int %) 48)
-                 (seq (str (pow 2 1000))))))
+  (time (reduce + (map #(- (int %) 48)
+                       (seq (str (pow 2 1000)))))))

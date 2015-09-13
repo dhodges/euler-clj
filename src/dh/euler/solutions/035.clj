@@ -29,5 +29,5 @@
 
 (defn euler-035
   []
-  (count
-   (for [n (range 2 1000000) :when (circular-prime? n)] n)))
+  (time (count
+         (for [n (range 2 1000000) :when (circular-prime? n)] n))))

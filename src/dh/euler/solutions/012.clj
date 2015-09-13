@@ -37,9 +37,9 @@
 
 (defn euler-012
   []
-  (loop [tnum (struct-map tn :num 1 :n 1)]
-    (let [num (tnum :num)
-          factors (factorise num)]
-      (if (> (count factors) 500)
-        num
-        (recur (next-tn tnum))))))
+  (time (loop [tnum (struct-map tn :num 1 :n 1)]
+          (let [num (tnum :num)
+                factors (factorise num)]
+            (if (> (count factors) 500)
+              num
+              (recur (next-tn tnum)))))))

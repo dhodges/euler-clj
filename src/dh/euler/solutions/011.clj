@@ -127,7 +127,7 @@
 
 (defn euler-011
   []
-  (reduce max [max-product-horizontal
-               max-product-vertical
-               max-product-diagonal-right
-               max-product-diagonal-left]))
+  (time (reduce max [max-product-horizontal
+                     max-product-vertical
+                     max-product-diagonal-right
+                     max-product-diagonal-left])))

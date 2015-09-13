@@ -44,6 +44,6 @@
 
 (defn euler-037
   []
-  (apply + (for [n (range 8 (inc upper-limit))
-                 :when (truncatable-prime? n)]
-             n)))
+  (time (apply + (for [n (range 8 (inc upper-limit))
+                       :when (truncatable-prime? n)]
+                   n))))

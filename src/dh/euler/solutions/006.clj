@@ -34,6 +34,6 @@
 
 (defn euler-006
   []
-   (let [squares (square-of-sums 100)
-         sums    (sum-of-squares 100)]
-     (- squares sums)))
+  (time (let [squares (square-of-sums 100)
+              sums    (sum-of-squares 100)]
+          (- squares sums))))

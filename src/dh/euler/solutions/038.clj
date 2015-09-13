@@ -65,4 +65,4 @@
 
 (defn euler-038
   []
-  (second (first (generate-pandigitals 10000))))
+  (time (second (first (generate-pandigitals 10000)))))

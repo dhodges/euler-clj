@@ -21,15 +21,15 @@
 
 (defn euler-024
   []
-  (loop [soln   []
-         digits [0 1 2 3 4 5 6 7 8 9]
-         remain 999999
-         f      9]
-    (if (> remain 0)
-      (let [n (quot remain (factorial f))
-             c (nth digits n)]
-        (recur (conj soln c)
-               (concat (take n digits) (drop (inc n) digits))
-               (- remain (* (factorial f) n))
-               (dec f)))
-      (apply str (conj soln (nth digits 0))))))
+  (time (loop [soln   []
+               digits [0 1 2 3 4 5 6 7 8 9]
+               remain 999999
+               f      9]
+          (if (> remain 0)
+            (let [n (quot remain (factorial f))
+                  c (nth digits n)]
+              (recur (conj soln c)
+                     (concat (take n digits) (drop (inc n) digits))
+                     (- remain (* (factorial f) n))
+                     (dec f)))
+            (apply str (conj soln (nth digits 0)))))))

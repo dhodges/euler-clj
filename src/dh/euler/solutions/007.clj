@@ -16,4 +16,4 @@
 
 (defn euler-007
   []
-  (nth-prime 10001))
+  (time (nth-prime 10001)))

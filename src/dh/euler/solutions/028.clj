@@ -46,8 +46,8 @@
 
 (defn euler-028
   []
-  (reduce + 1 (for [x (range 1001 1 -2)]
-                (+ (north-east x)
-                   (north-west x)
-                   (south-west x)
-                   (south-east x)))))
+  (time (reduce + 1 (for [x (range 1001 1 -2)]
+                      (+ (north-east x)
+                         (north-west x)
+                         (south-west x)
+                         (south-east x))))))

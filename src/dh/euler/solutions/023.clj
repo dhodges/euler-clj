@@ -43,6 +43,6 @@
 
 (defn euler-023
   []
-  (apply +
-         (cons 1 (filter #(not (sum-of-2-abundants? %))
-                         (range 2 28123)))))
+  (time (apply +
+               (cons 1 (filter #(not (sum-of-2-abundants? %))
+                               (range 2 28123))))))
