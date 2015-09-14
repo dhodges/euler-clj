@@ -29,20 +29,19 @@
                              (/ n 2)
                              (inc (* 3 n)))))))
 
-(defstruct chain :n :len)
+(defn- collatz-count
+  [n]
+  (count(collatz-chain n)))
 
 (defn euler-014
   []
   (time (loop [n 0
-               max-chain (struct-map chain :n 13 :len 10)]
+               max-chain {:n 13 :len 10}]
           (if (>= n 1000000)
-            (max-chain :n)
-            (do
-              (let [n (inc n)
-                    new-chain (struct-map chain
-                                          :n n
-                                          :len (count(collatz-chain n)))]
-                (if (> (new-chain :len)
-                       (max-chain :len))
-                  (recur n new-chain)
-                  (recur n max-chain))))))))
+            (:n max-chain)
+            (let [n (inc n)
+                  len (collatz-count n)]
+              (recur n
+                     (if (> len (:len max-chain))
+                       {:n n :len len}
+                       max-chain)))))))
