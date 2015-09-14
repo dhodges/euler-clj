@@ -11,9 +11,11 @@
 ;; Answer: 55
 
 (ns dh.euler.solutions.035
-  (:use [dh.euler.util.core   :refer [factor? factorise]]
-        [dh.euler.util.primes :refer [prime?]]
-        [dh.euler.util.string :refer [str-rotate-left]]))
+  (:use [dh.euler.util.core   :refer [num-digits]]
+        [dh.euler.util.primes :refer [primes prime?]]
+        [dh.euler.util.string :refer [str-rotate-left]])
+  (:import [java.lang Math]))
+
 
 (defn rotate-left-num
   [num n]
@@ -22,12 +24,13 @@
 
 (defn circular-prime?
   [n]
-  (and (prime? n)
-       (reduce #(and %1 %2)
-               (for [i (range (count (str n)))]
-                 (prime? (rotate-left-num n i))))))
+  (every? prime?
+          (for [i (range 1 (inc (num-digits n)))]
+            (rotate-left-num n i))))
+
 
 (defn euler-035
   []
   (time (count
-         (for [n (range 2 1000000) :when (circular-prime? n)] n))))
+         (filter circular-prime?
+                 (take-while #(> 1000000 %) primes)))))

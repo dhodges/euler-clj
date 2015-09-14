@@ -2,6 +2,10 @@
   (:use [clojure.set :refer [intersection]])
   (:use [clojure.math.numeric-tower :refer [expt]]))
 
+(defn num-digits
+  [n]
+  (inc (Math/floor (Math/log10 n))))
+
 (defn pow
   [a b]
   (expt a b))
