@@ -4,9 +4,6 @@
   [s chr]
   (< -1 (.indexOf s (str chr))))
 
-(defn strcat
-  [& items]
-  (apply str (apply concat (map str items))))
 
 (defn str-pandigital?
   [nstr]

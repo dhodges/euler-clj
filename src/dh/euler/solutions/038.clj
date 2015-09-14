@@ -24,7 +24,7 @@
 
 
 (ns dh.euler.solutions.038
-  (:use [dh.euler.util.string :refer [strcat str-pandigital?]]))
+  (:use [dh.euler.util.string :refer [str-pandigital?]]))
 
 
 (defn catprod-pandigital
@@ -38,7 +38,7 @@
           [number (Long/parseLong catprod)]
           :else
           (recur (inc n)
-                 (strcat catprod (* number (inc n)))))))
+                 (str catprod (* number (inc n)))))))
 
 (def cmp (proxy [java.util.Comparator] []
            (compare [o1 o2]

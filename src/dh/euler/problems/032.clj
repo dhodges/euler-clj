@@ -15,7 +15,8 @@
 
 (ns dh.euler.problems.032
   (:use [dh.euler.util.core   :refer [proper-divisors]]
-        [dh.euler.util.string :refer [str-pandigital? strcat]]))
+        [dh.euler.util.string :refer [str-pandigital?]])
+  (:require  [clojure.string :as str]))
 
 (defn divisor-pairs
   [n]
@@ -34,10 +35,7 @@
 
 (defn pandigital-1-thru-9-triple?
   [[multiplicand multiplier product]]
-  (let [s (strcat (str multiplicand)
-                  (str multiplier)
-                  (str product))]
-    (pandigital-1-thru-9-str? s)))
+  (pandigital-1-thru-9-str? (str multiplicand multiplier product)))
 
 (defn product-triples
   [n]
@@ -56,7 +54,7 @@
        products
        (let [triples  (valid-triples-from n)
              n        (inc n)
-             products (if (< 0 (count triples))
+             products (if (pos? (count triples))
                         (cons (last (nth triples 0)) products)
                         products)]
          (recur n products)))))

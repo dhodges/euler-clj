@@ -13,8 +13,7 @@
 ;; http://projecteuler.net/problem=22
 
 (ns dh.euler.solutions.022
-  (:use [dh.euler.util.string :refer [strcat]]
-        [clojure.string :refer [split replace]]
+  (:use [clojure.string :refer [split replace]]
         [clojure.java.io :as io]
 ))
 
