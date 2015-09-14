@@ -12,28 +12,27 @@
 ;; http://projecteuler.net/problem=37
 
 (ns dh.euler.solutions.037
-  (:use [dh.euler.util.core   :refer [factor? factorise]]
-        [dh.euler.util.primes :refer [prime?]]))
+  (:use [dh.euler.util.core   :refer [num-digits pow]]
+        [dh.euler.util.primes :refer [prime? primes]]))
 
 
-; Notes
-; Truncatable Primes
-; http://en.wikipedia.org/wiki/Truncatable_prime
-;
+;; Notes
+;; Truncatable Primes
+;; http://en.wikipedia.org/wiki/Truncatable_prime
+
+(defn flint [n] (int (Math/floor n)))
 
 (defn left-truncatable-prime?
   [n]
-  (let [nstr (str n)]
-    (reduce #(and %1 %2)
-            (for [i (range (count nstr))]
-              (prime? (Integer/parseInt (.substring nstr i)))))))
+  (every? prime?
+          (for [i (range (num-digits n) 0 -1)]
+            (int (mod n (pow 10 i))))))
 
 (defn right-truncatable-prime?
   [n]
-  (let [nstr (str n)]
-    (reduce #(and %1 %2)
-            (for [i (range (count nstr) 0 -1)]
-              (prime? (Integer/parseInt (.substring nstr 0 i)))))))
+  (every? prime?
+          (for [i (range 1 (num-digits n))]
+            (flint (/ n (pow 10 i))))))
 
 (defn truncatable-prime?
   [n]
@@ -47,3 +46,10 @@
   (time (apply + (for [n (range 8 (inc upper-limit))
                        :when (truncatable-prime? n)]
                    n))))
+
+;; (defn euler-037-new
+;;   []
+;;   (time
+;;    (apply + (filter truncatable-prime?
+;;                     (take-while #(> upper-limit %)
+;;                                 (drop-while #(> 8 %) primes))))))
